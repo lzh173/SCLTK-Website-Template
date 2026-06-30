@@ -1,0 +1,64 @@
+{
+    // 版权
+    "copyright": "Copyright (C) 2026 MaxLHy0424.",
+    // 公告文件的路径
+    "announcement_file": "/assets/announcement.txt",
+    // 友情链接
+    "links": [
+        // {
+        //     "name": "",
+        //     "url": "",
+        //     "description": ""
+        // }
+    ],
+    // 主线版本
+    "SCLTK": {
+        // 稳定版本
+        "stable": {
+            // 版本信息
+            "version": "v7.2.0",
+            // 程序文件
+            "program": "/assets/stable-build/SCLTK.exe",
+            // GPG 签名文件
+            "sig": "/assets/stable-build/SCLTK.exe.sig",
+            // 增强配置文件的路径
+            "enhanced_config": "/assets/stable-build/SCLTK.conf"
+        },
+        // 预览版本
+        "preview": {
+            // 版本信息
+            "version": "v7.2.0",
+            // 程序文件的路径
+            "program": "/assets/preview-build/SCLTK.exe",
+            // GPG 签名文件的路径
+            "sig": "/assets/preview-build/SCLTK.exe.sig",
+            // 增强配置文件的路径
+            "enhanced_config": "/assets/preview-build/SCLTK.conf"
+        }
+    },
+    // Legacy 版本
+    "SCLTK-Legacy": {
+        // 稳定版本
+        "stable": {
+            // 版本信息
+            "version": "v7.2.0",
+            // 程序文件的路径
+            "program": "/assets/stable-build/SCLTK-Legacy.exe",
+            // GPG 签名文件
+            "sig": "/assets/stable-build/SCLTK-Legacy.exe.sig",
+            // 增强配置文件的路径
+            "enhanced_config": "/assets/stable-build/SCLTK-Legacy.conf"
+        },
+        // 预览版本
+        "preview": {
+            // 版本信息
+            "version": "v7.2.0",
+            // 程序文件的路径
+            "program": "/assets/preview-build/SCLTK-Legacy.exe",
+            // GPG 签名文件的路径
+            "sig": "/assets/preview-build/SCLTK-Legacy.exe.sig",
+            // 增强配置文件的路径
+            "enhanced_config": "/assets/preview-build/SCLTK-Legacy.conf"
+        }
+    }
+}
