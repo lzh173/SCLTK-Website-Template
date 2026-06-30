@@ -5,11 +5,21 @@
     "announcement_file": "/assets/announcement.txt",
     // 友情链接
     "links": [
-        // {
-        //     "name": "",
-        //     "url": "",
-        //     "description": ""
-        // }
+        {
+            "name": "开发者博客",
+            "url": "https://maxlhy0424.is-a.dev",
+            "description": "本下载站开发者的博客"
+        },
+        {
+            "name": "开发者官方节点",
+            "url": "https://scltk.maxlhy0424.is-a.dev",
+            "description": "本下载站的官方节点"
+        },
+        {
+            "name": "lzh173 镜像节点",
+            "url": "https://scltk.lzh173.chat",
+            "description": "本下载站的 lzh173 部署镜像节点"
+        }
     ],
     // 主线版本
     "SCLTK": {
