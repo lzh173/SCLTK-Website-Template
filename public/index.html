@@ -1,0 +1,2107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="description" content="SCLTK & SCLTK-Legacy 官方下载站" />
+    <title>SCLTK &amp; SCLTK-Legacy 下载站</title>
+    <style>
+        :root {
+            --bg-body: #f6f8fc;
+            --bg-card: #ffffff;
+            --bg-header: rgba(255, 255, 255, 0.72);
+            --bg-capsule: #e8ecf2;
+            --bg-slider: #ffffff;
+            --bg-modal: #ffffff;
+            --bg-overlay: rgba(0, 0, 0, 0.45);
+            --bg-code: #f0f2f8;
+            --text-primary: #1a1a2e;
+            --text-secondary: #4a4a6a;
+            --text-muted: #7a7a9a;
+            --border-light: #dce0e8;
+            --shadow-card: 0 8px 30px rgba(0, 0, 0, 0.08);
+            --shadow-capsule: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --shadow-btn: 0 4px 14px rgba(79, 124, 255, 0.35);
+            --accent: #4f7cff;
+            --accent-hover: #3a66e0;
+            --accent-light: rgba(79, 124, 255, 0.12);
+            --error: #ef4444;
+            --error-bg: rgba(239, 68, 68, 0.10);
+            --error-border: rgba(239, 68, 68, 0.20);
+            --success: #10b981;
+            --success-bg: rgba(16, 185, 129, 0.12);
+            --success-border: rgba(16, 185, 129, 0.25);
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 12px;
+            --radius-full: 9999px;
+            --transition-smooth: 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            --transition-soft: 0.25s ease;
+            --transition-fast: 0.15s ease;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+            --font-mono: "Maple Mono NL NF CN", "JetBrains Mono", "Cascadia Code", "Fira Code", Consolas, monospace;
+        }
+
+        [data-theme="dark"] {
+            --bg-body: #0d0d1a;
+            --bg-card: #18182b;
+            --bg-header: rgba(24, 24, 43, 0.78);
+            --bg-capsule: #28283e;
+            --bg-slider: #3a3a5a;
+            --bg-modal: #1e1e34;
+            --bg-overlay: rgba(0, 0, 0, 0.65);
+            --bg-code: #141428;
+            --text-primary: #eaeaf0;
+            --text-secondary: #b8b8d0;
+            --text-muted: #8888aa;
+            --border-light: #2e2e4a;
+            --shadow-card: 0 8px 30px rgba(0, 0, 0, 0.5);
+            --shadow-capsule: 0 2px 8px rgba(0, 0, 0, 0.3);
+            --shadow-btn: 0 4px 14px rgba(79, 124, 255, 0.3);
+            --accent: #5d85ff;
+            --accent-hover: #4a72e8;
+            --accent-light: rgba(93, 133, 255, 0.18);
+            --success: #34d399;
+            --success-bg: rgba(52, 211, 153, 0.15);
+            --success-border: rgba(52, 211, 153, 0.25);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg-body);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 12px 24px 48px;
+            transition: background var(--transition-soft), color var(--transition-soft);
+        }
+
+        .app {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 12px;
+        }
+
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding: 0 4px;
+        }
+
+        .toolbar__group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toolbar__btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border: none;
+            border-radius: var(--radius-full);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            font-family: inherit;
+            line-height: 1.5;
+        }
+
+        .toolbar__btn:hover {
+            background: var(--accent-light);
+            color: var(--accent);
+            transform: translateY(-1px);
+        }
+
+        .toolbar__btn:active {
+            transform: translateY(0);
+        }
+
+        .toolbar__btn .icon {
+            font-size: 1rem;
+            line-height: 1;
+        }
+
+        .toolbar__btn--theme {
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            justify-content: center;
+        }
+
+        .toolbar__btn--theme:hover {
+            transform: rotate(12deg);
+        }
+
+        .main-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--border-light);
+            padding: 20px 24px 24px;
+            margin-bottom: 24px;
+            transition: all var(--transition-soft);
+        }
+
+        .banner {
+            text-align: center;
+            padding: 0;
+            margin-bottom: 20px;
+            background: transparent;
+            box-shadow: none;
+            border: none;
+        }
+
+        .banner__title {
+            font-size: clamp(1.6rem, 5vw, 2.4rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--accent), #8b6cff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 4px;
+        }
+
+        .banner__copyright {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            letter-spacing: 0.3px;
+            -webkit-text-fill-color: var(--text-muted);
+        }
+
+        .selector {
+            padding: 0;
+            background: transparent;
+            box-shadow: none;
+            border: none;
+        }
+
+        .selector__row {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-end;
+            gap: 16px;
+            margin-bottom: 8px;
+        }
+
+        .selector__item {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .selector__action {
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            padding-bottom: 2px;
+        }
+
+        .capsule {
+            position: relative;
+            display: flex;
+            background: var(--bg-capsule);
+            border-radius: var(--radius-full);
+            padding: 3px;
+            cursor: pointer;
+            overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06);
+            transition: background var(--transition-soft);
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .capsule__slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: calc(50% - 3px);
+            height: calc(100% - 6px);
+            background: var(--bg-slider);
+            border-radius: var(--radius-full);
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), background var(--transition-soft);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            will-change: transform;
+            pointer-events: none;
+        }
+
+        .capsule__slider--right {
+            transform: translateX(100%);
+        }
+
+        .capsule__option {
+            flex: 1;
+            text-align: center;
+            padding: 6px 14px;
+            border: none;
+            background: transparent;
+            font-family: inherit;
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: color var(--transition-soft);
+            z-index: 1;
+            position: relative;
+            border-radius: var(--radius-full);
+            letter-spacing: 0.2px;
+        }
+
+        .capsule__option--active {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .capsule__option:hover:not(.capsule__option--active) {
+            color: var(--text-secondary);
+        }
+
+        .capsule__option:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 8px 18px;
+            border: none;
+            border-radius: var(--radius-full);
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            line-height: 1.5;
+            text-decoration: none;
+        }
+
+        .btn--primary {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: var(--shadow-btn);
+        }
+
+        .btn--primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(79, 124, 255, 0.4);
+        }
+
+        .btn--primary:active {
+            transform: translateY(0);
+        }
+
+        .btn--primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn--confirm {
+            padding: 6px 18px;
+            height: 34px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .btn--secondary {
+            background: var(--bg-capsule);
+            color: var(--text-secondary);
+        }
+
+        .btn--secondary:hover {
+            background: var(--accent-light);
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .btn--secondary:active {
+            transform: translateY(0);
+        }
+
+        .btn--ghost {
+            background: transparent;
+            border: 1px solid var(--border-light);
+            color: var(--text-muted);
+        }
+
+        .btn--ghost:hover {
+            background: var(--accent-light);
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .btn--disabled {
+            opacity: 0.5;
+            cursor: default;
+            pointer-events: none;
+        }
+
+        .btn--write {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+            font-weight: 600;
+        }
+
+        .btn--write:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(16, 185, 129, 0.45);
+            filter: brightness(1.05);
+        }
+
+        .btn--write:active {
+            transform: translateY(0);
+        }
+
+        .btn--write:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+            filter: none;
+        }
+
+        .btn--write .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid #fff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            vertical-align: middle;
+            margin-right: 4px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .status {
+            text-align: center;
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            margin-top: 8px;
+            display: none;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        .status--error {
+            display: block;
+            background: var(--error-bg);
+            color: var(--error);
+            border: 1px solid var(--error-border);
+        }
+
+        .status--loading {
+            display: block;
+            color: var(--text-muted);
+            background: var(--bg-capsule);
+        }
+
+        .status--success {
+            display: block;
+            background: var(--success-bg);
+            color: var(--success);
+            border: 1px solid var(--success-border);
+        }
+
+        .card-area {
+            min-height: 100px;
+            transition: all var(--transition-soft);
+            margin-bottom: 24px;
+        }
+
+        .card-area__empty {
+            text-align: center;
+            padding: 48px 20px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px dashed var(--border-light);
+            transition: all var(--transition-soft);
+        }
+
+        .card-area__empty .icon-big {
+            font-size: 2.8rem;
+            display: block;
+            margin-bottom: 12px;
+            opacity: 0.5;
+            line-height: 1;
+        }
+
+        .download-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 20px 24px;
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--border-light);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                box-shadow 0.4s ease,
+                opacity 0.3s ease;
+            transform-origin: top center;
+            margin-bottom: 8px;
+            opacity: 0;
+            transform: translateY(24px) scale(0.96);
+            animation: cardEnter 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        .download-card:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: var(--shadow-card), 0 12px 40px rgba(0, 0, 0, 0.06);
+        }
+
+        [data-theme="dark"] .download-card:hover {
+            box-shadow: var(--shadow-card), 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .download-card--exit {
+            opacity: 0 !important;
+            transform: translateY(-10px) scale(0.97) !important;
+            transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+            pointer-events: none;
+        }
+
+        @keyframes cardEnter {
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .download-card__header {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 6px 14px;
+            margin-bottom: 14px;
+        }
+
+        .download-card__name {
+            font-size: clamp(1.15rem, 3vw, 1.3rem);
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .download-card__version {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--accent);
+            background: var(--accent-light);
+            padding: 2px 12px;
+            border-radius: var(--radius-full);
+            letter-spacing: 0.2px;
+        }
+
+        .download-card__actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 2px;
+        }
+
+        .download-card__sig-hint {
+            margin-top: 6px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding-top: 6px;
+            line-height: 1.5;
+        }
+
+        .download-card__write-info {
+            margin-top: 12px;
+            margin-bottom: 2px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding-top: 6px;
+            line-height: 1.5;
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-overlay);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 24px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal--open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal__box {
+            background: var(--bg-modal);
+            border-radius: var(--radius-lg);
+            max-width: 820px;
+            width: 100%;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-light);
+            transform: scale(0.95) translateY(12px);
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .modal--open .modal__box {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 24px 14px;
+            border-bottom: 1px solid var(--border-light);
+            flex-shrink: 0;
+        }
+
+        .modal__title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.4;
+        }
+
+        .modal__close {
+            width: 34px;
+            height: 34px;
+            border: none;
+            border-radius: 50%;
+            background: var(--bg-capsule);
+            font-size: 1.2rem;
+            line-height: 1;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: inherit;
+        }
+
+        .modal__close:hover {
+            background: var(--accent-light);
+            color: var(--accent);
+        }
+
+        .modal__body {
+            padding: 18px 24px 24px;
+            overflow-y: auto;
+            flex: 1;
+            line-height: 1.6;
+        }
+
+        .code-block {
+            position: relative;
+            background: var(--bg-code);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-light);
+            overflow: hidden;
+            margin: 12px 0;
+        }
+
+        .code-block pre,
+        .code-block code,
+        .raw-content,
+        .modal__body pre,
+        .modal__body code {
+            font-family: var(--font-mono) !important;
+            font-size: 0.8rem;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-all;
+            color: var(--text-secondary);
+        }
+
+        .code-block pre {
+            padding: 14px 18px;
+            margin: 0;
+            background: transparent;
+            border: none;
+            max-height: 50vh;
+            overflow-y: auto;
+        }
+
+        .code-block__copy {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: var(--bg-capsule);
+            border: none;
+            border-radius: var(--radius-sm);
+            padding: 4px 10px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            font-family: var(--font-sans);
+            opacity: 0.7;
+            z-index: 2;
+        }
+
+        .code-block__copy:hover {
+            background: var(--accent-light);
+            color: var(--accent);
+            opacity: 1;
+        }
+
+        .code-block__copy--copied {
+            background: var(--accent) !important;
+            color: #fff !important;
+            opacity: 1 !important;
+        }
+
+        .raw-content {
+            background: var(--bg-code);
+            padding: 14px 18px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-light);
+            margin: 0;
+            max-height: 50vh;
+            overflow-y: auto;
+            font-size: 0.8rem;
+        }
+
+        .loading-text {
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .announcement-content {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            word-break: break-word;
+        }
+
+        .announcement-content>*+* {
+            margin-top: 0.75em;
+        }
+
+        .announcement-content h2,
+        .announcement-content h3,
+        .announcement-content h4 {
+            color: var(--text-primary);
+            margin-top: 1.2em;
+            margin-bottom: 0.4em;
+            line-height: 1.3;
+        }
+
+        .announcement-content h2:first-child,
+        .announcement-content h3:first-child,
+        .announcement-content h4:first-child {
+            margin-top: 0;
+        }
+
+        .announcement-content ul,
+        .announcement-content ol {
+            padding-left: 1.5em;
+            margin: 0.5em 0;
+        }
+
+        .announcement-content li {
+            margin-bottom: 0.35em;
+        }
+
+        .announcement-content li>p {
+            margin: 0;
+        }
+
+        .announcement-content a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color var(--transition-fast);
+        }
+
+        .announcement-content a:hover {
+            text-decoration: none;
+            border-bottom-color: var(--accent);
+        }
+
+        .announcement-content blockquote {
+            border-left: 3px solid var(--accent);
+            padding-left: 1em;
+            margin: 0.5em 0;
+            color: var(--text-muted);
+        }
+
+        .announcement-content code {
+            font-family: var(--font-mono);
+            background: var(--bg-capsule);
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+
+        .announcement-content pre {
+            font-family: var(--font-mono);
+            background: var(--bg-code);
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-light);
+            overflow-x: auto;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            margin: 0.5em 0;
+        }
+
+        .announcement-content pre code {
+            background: transparent;
+            padding: 0;
+            font-size: inherit;
+        }
+
+        .method {
+            margin-bottom: 28px;
+        }
+
+        .method:last-child {
+            margin-bottom: 0;
+        }
+
+        .method__title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .method__steps {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .method__steps ol {
+            padding-left: 20px;
+            margin: 0;
+        }
+
+        .method__steps li {
+            margin-bottom: 6px;
+        }
+
+        .method__steps li>code {
+            background: var(--bg-capsule);
+            padding: 1px 5px;
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            font-size: 0.85em;
+        }
+
+        .write-progress {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 4px 0;
+        }
+
+        .write-progress__item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
+            transition: all var(--transition-soft);
+        }
+
+        .write-progress__item--done {
+            color: var(--success);
+            background: var(--success-bg);
+        }
+
+        .write-progress__item--error {
+            color: var(--error);
+            background: var(--error-bg);
+        }
+
+        .write-progress__item .status-icon {
+            font-size: 1rem;
+            width: 20px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .write-progress__item .file-name {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            word-break: break-all;
+        }
+
+        .write-progress__item .file-size {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-left: auto;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 768px) {
+            .app {
+                max-width: 100%;
+                padding: 0 8px;
+            }
+
+            body {
+                padding: 8px 12px 32px;
+            }
+
+            .main-card {
+                padding: 16px 16px 18px;
+            }
+
+            .selector__row {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 14px;
+            }
+
+            .selector__action {
+                align-self: center;
+                padding-bottom: 0;
+            }
+
+            .btn--confirm {
+                width: 100%;
+                justify-content: center;
+                height: auto;
+                padding: 10px 18px;
+            }
+
+            .download-card {
+                padding: 16px 18px;
+            }
+
+            .download-card__actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .download-card__actions .btn--secondary,
+            .download-card__actions .btn--ghost,
+            .download-card__actions .btn--write {
+                justify-content: center;
+                width: 100%;
+            }
+
+            .modal__box {
+                max-width: 100%;
+                max-height: 90vh;
+                margin: 12px;
+            }
+
+            .code-block pre,
+            .raw-content {
+                font-size: 0.7rem;
+                padding: 12px 14px;
+            }
+
+            .toolbar {
+                margin-bottom: 12px;
+            }
+
+            .toolbar__btn .btn-label {
+                display: none;
+            }
+
+            .toolbar__btn {
+                padding: 6px 12px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .banner__title {
+                font-size: 1.6rem;
+            }
+
+            .capsule__option {
+                font-size: 0.78rem;
+                padding: 4px 10px;
+            }
+
+            .code-block pre,
+            .raw-content {
+                font-size: 0.65rem;
+                padding: 10px 12px;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-light);
+            border-radius: 999px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="app" role="main">
+
+        <nav class="toolbar" aria-label="工具栏">
+            <div class="toolbar__group">
+                <button class="toolbar__btn" id="btnAnnouncement" aria-label="显示公告" style="display:none;">
+                    <span class="icon" aria-hidden="true">📢</span>
+                    <span class="btn-label">公告</span>
+                </button>
+                <button class="toolbar__btn" id="btnGpg" aria-label="显示 GPG 公钥">
+                    <span class="icon" aria-hidden="true">🔑</span>
+                    <span class="btn-label">GPG 公钥</span>
+                </button>
+                <button class="toolbar__btn" id="btnLicense" aria-label="显示许可证">
+                    <span class="icon" aria-hidden="true">📄</span>
+                    <span class="btn-label">许可证</span>
+                </button>
+            </div>
+            <div class="toolbar__group">
+                <button class="toolbar__btn toolbar__btn--theme" id="btnTheme" aria-label="切换主题" title="切换主题">
+                    <span id="themeIcon" aria-hidden="true">🌙</span>
+                </button>
+            </div>
+        </nav>
+
+        <div class="main-card">
+
+            <header class="banner">
+                <h1 class="banner__title">SCLTK &amp; SCLTK-Legacy 下载站</h1>
+                <p class="banner__copyright" id="copyrightText">加载版权信息…</p>
+            </header>
+
+            <section class="selector" aria-label="版本选择">
+                <div class="selector__row">
+
+                    <div class="selector__item">
+                        <div class="capsule" id="projectGroup" role="radiogroup" aria-label="选择项目">
+                            <div class="capsule__slider" id="projectSlider"></div>
+                            <button class="capsule__option capsule__option--active" data-value="SCLTK" role="radio"
+                                aria-checked="true" tabindex="0">SCLTK</button>
+                            <button class="capsule__option" data-value="SCLTK-Legacy" role="radio" aria-checked="false"
+                                tabindex="-1">SCLTK-Legacy</button>
+                        </div>
+                    </div>
+
+                    <div class="selector__item">
+                        <div class="capsule" id="versionGroup" role="radiogroup" aria-label="选择版本类型">
+                            <div class="capsule__slider" id="versionSlider"></div>
+                            <button class="capsule__option capsule__option--active" data-value="stable" role="radio"
+                                aria-checked="true" tabindex="0">稳定版本</button>
+                            <button class="capsule__option" data-value="preview" role="radio" aria-checked="false"
+                                tabindex="-1">预览版本</button>
+                        </div>
+                    </div>
+
+                    <div class="selector__action">
+                        <button class="btn btn--primary btn--confirm" id="btnConfirm">
+                            <span aria-hidden="true">✅</span> 确定
+                        </button>
+                    </div>
+
+                </div>
+                <div class="status" id="statusMessage" role="status" aria-live="polite"></div>
+            </section>
+
+        </div>
+
+        <section class="card-area" id="cardArea" aria-label="下载卡片">
+            <div class="card-area__empty" id="emptyState">
+                <span class="icon-big" aria-hidden="true">📂</span>
+                选择版本并点击「确定」查看下载
+            </div>
+        </section>
+
+    </div>
+
+    <div id="modalContainer"></div>
+
+    <script>
+        (function () {
+            'use strict';
+
+            class Utils {
+                static escapeHtml(text) {
+                    const div = document.createElement('div');
+                    div.textContent = text;
+                    return div.innerHTML;
+                }
+
+                static async fetchWithTimeout(url, options = {}, timeout = 10000) {
+                    const controller = new AbortController();
+                    const id = setTimeout(() => controller.abort(), timeout);
+                    try {
+                        const response = await fetch(url, { ...options, signal: controller.signal });
+                        clearTimeout(id);
+                        return response;
+                    } catch (err) {
+                        clearTimeout(id);
+                        if (err.name === 'AbortError') throw new Error('请求超时');
+                        throw err;
+                    }
+                }
+
+                static parseJsonc(text) {
+                    let out = '';
+                    let inStr = false;
+                    let strChar = '';
+                    let inComment = false;
+                    let i = 0;
+                    while (i < text.length) {
+                        const ch = text[i];
+                        if (!inComment && !inStr && ch === '/' && text[i + 1] === '/') {
+                            while (i < text.length && text[i] !== '\n' && text[i] !== '\r') i++;
+                            continue;
+                        }
+                        if (!inComment && !inStr && ch === '/' && text[i + 1] === '*') {
+                            inComment = true;
+                            i += 2;
+                            continue;
+                        }
+                        if (inComment && ch === '*' && text[i + 1] === '/') {
+                            inComment = false;
+                            i += 2;
+                            continue;
+                        }
+                        if (!inComment && !inStr && (ch === '"' || ch === "'")) {
+                            inStr = true;
+                            strChar = ch;
+                            out += ch;
+                            i++;
+                            continue;
+                        }
+                        if (inStr && ch === strChar && text[i - 1] !== '\\') {
+                            inStr = false;
+                            out += ch;
+                            i++;
+                            continue;
+                        }
+                        if (inComment) { i++; continue; }
+                        out += ch;
+                        i++;
+                    }
+                    return JSON.parse(out);
+                }
+
+                static parseMarkdownLite(text) {
+                    const lines = text.split('\n');
+                    const blocks = [];
+                    let currentList = [];
+                    let currentCodeBlock = [];
+                    let inCodeBlock = false;
+
+                    const flushList = () => {
+                        if (currentList.length) {
+                            blocks.push('<ul>' + currentList.map(item => `<li>${Utils.escapeHtml(item)}</li>`).join('') + '</ul>');
+                            currentList = [];
+                        }
+                    };
+
+                    const flushCodeBlock = () => {
+                        if (currentCodeBlock.length) {
+                            const code = Utils.escapeHtml(currentCodeBlock.join('\n'));
+                            blocks.push(`<pre><code>${code}</code></pre>`);
+                            currentCodeBlock = [];
+                        }
+                    };
+
+                    for (const line of lines) {
+                        const trimmed = line.trim();
+
+                        if (trimmed.startsWith('```')) {
+                            if (inCodeBlock) {
+                                flushCodeBlock();
+                                inCodeBlock = false;
+                            } else {
+                                flushList();
+                                inCodeBlock = true;
+                            }
+                            continue;
+                        }
+
+                        if (inCodeBlock) {
+                            currentCodeBlock.push(line);
+                            continue;
+                        }
+
+                        if (!trimmed) {
+                            flushList();
+                            continue;
+                        }
+
+                        if (/^[-*]\s+/.test(trimmed)) {
+                            currentList.push(trimmed.replace(/^[-*]\s+/, ''));
+                            continue;
+                        }
+
+                        flushList();
+
+                        const headingMatch = trimmed.match(/^(#{1,4})\s+(.*)$/);
+                        if (headingMatch) {
+                            const level = headingMatch[1].length + 1;
+                            const content = Utils.escapeHtml(headingMatch[2]);
+                            blocks.push(`<h${level}>${content}</h${level}>`);
+                            continue;
+                        }
+
+                        blocks.push(Utils.escapeHtml(line));
+                    }
+
+                    flushList();
+                    if (inCodeBlock) flushCodeBlock();
+
+                    const processed = blocks.map(block => {
+                        if (block.startsWith('<h') || block.startsWith('<ul') || block.startsWith('<pre')) {
+                            return block;
+                        }
+                        let content = block;
+                        content = content.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+                        content = content.replace(/\*(.+?)\*/g, '<em>$1</em>');
+                        content = content.replace(/`([^`]+)`/g, '<code>$1</code>');
+                        content = content.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+                        return content ? `<p>${content}</p>` : '';
+                    });
+
+                    return `<div class="announcement-content">${processed.join('')}</div>`;
+                }
+
+                static formatFileSize(bytes) {
+                    if (bytes < 1024) return bytes + ' B';
+                    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+                    if (bytes < 1024 * 1024 * 1024) return (bytes / 1024 / 1024).toFixed(1) + ' MB';
+                    return (bytes / 1024 / 1024 / 1024).toFixed(1) + ' GB';
+                }
+
+                static getFileNameFromUrl(url) {
+                    try {
+                        const u = new URL(url);
+                        const path = u.pathname;
+                        const segments = path.split('/');
+                        let fileName = segments.pop() || 'file';
+                        if (fileName.includes('?')) fileName = fileName.split('?')[0];
+                        if (fileName.includes('#')) fileName = fileName.split('#')[0];
+                        return decodeURIComponent(fileName) || 'file';
+                    } catch {
+                        return url.split('/').pop()?.split('?')[0]?.split('#')[0] || 'file';
+                    }
+                }
+            }
+
+            class ClipboardManager {
+                static async copy(text) {
+                    if (navigator.clipboard && window.isSecureContext) {
+                        await navigator.clipboard.writeText(text);
+                        return true;
+                    }
+                    const textarea = document.createElement('textarea');
+                    textarea.value = text;
+                    textarea.style.position = 'fixed';
+                    textarea.style.opacity = '0';
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    const success = document.execCommand('copy');
+                    document.body.removeChild(textarea);
+                    return success;
+                }
+
+                static async copyFromElement(button, targetId) {
+                    const pre = document.getElementById(targetId);
+                    if (!pre) return false;
+                    const success = await this.copy(pre.textContent);
+                    if (success) this.showFeedback(button);
+                    return success;
+                }
+
+                static showFeedback(button) {
+                    const originalText = button.textContent;
+                    button.textContent = '已复制';
+                    button.classList.add('code-block__copy--copied');
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.classList.remove('code-block__copy--copied');
+                    }, 2000);
+                }
+            }
+
+            class ModalManager {
+                constructor() {
+                    this.activeModal = null;
+                    this.modals = new Map();
+                    this.container = document.getElementById('modalContainer');
+                }
+
+                register(id, config) {
+                    this.modals.set(id, config);
+                    this.renderModal(id, config);
+                    this.bindEvents(id);
+                }
+
+                renderModal(id, config) {
+                    const { title, bodyId, initialContent } = config;
+                    const html = `
+                    <div class="modal" id="modal${id}" role="dialog" aria-modal="true" aria-labelledby="modal${id}Title">
+                        <div class="modal__box">
+                            <div class="modal__header">
+                                <h2 class="modal__title" id="modal${id}Title">${title}</h2>
+                                <button class="modal__close" id="modal${id}Close" aria-label="关闭">✕</button>
+                            </div>
+                            <div class="modal__body" id="${bodyId}">
+                                ${initialContent || '<span class="loading-text">⏳ 加载中…</span>'}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                    const wrapper = document.createElement('div');
+                    wrapper.innerHTML = html.trim();
+                    this.container.appendChild(wrapper.firstElementChild);
+                }
+
+                bindEvents(id) {
+                    const modal = document.getElementById(`modal${id}`);
+                    const closeBtn = document.getElementById(`modal${id}Close`);
+                    closeBtn.addEventListener('click', () => this.close(id));
+                    modal.addEventListener('click', (e) => {
+                        if (e.target === modal) this.close(id);
+                    });
+                }
+
+                open(id, contentCallback) {
+                    const modal = document.getElementById(`modal${id}`);
+                    if (!modal) return;
+                    if (contentCallback) {
+                        const body = modal.querySelector('.modal__body');
+                        contentCallback(body);
+                    }
+                    modal.classList.add('modal--open');
+                    this.activeModal = modal;
+                    document.body.style.overflow = 'hidden';
+                }
+
+                close(id) {
+                    const modal = id ? document.getElementById(`modal${id}`) : this.activeModal;
+                    if (!modal) return;
+                    modal.classList.remove('modal--open');
+                    if (this.activeModal === modal) {
+                        this.activeModal = null;
+                        document.body.style.overflow = '';
+                    }
+                }
+
+                closeAll() {
+                    document.querySelectorAll('.modal--open').forEach(m => m.classList.remove('modal--open'));
+                    this.activeModal = null;
+                    document.body.style.overflow = '';
+                }
+            }
+
+            class SCLTKApp {
+                constructor() {
+                    this.state = {
+                        data: null,
+                        dataLoaded: false,
+                        project: 'SCLTK',
+                        version: 'stable',
+                        cardProject: '',
+                        cardVersion: '',
+                        theme: 'light',
+                        cache: { gpg: null, license: null, announcement: null },
+                        flags: { gpgLoaded: false, licenseLoaded: false, announcementLoaded: false },
+                        writeInProgress: false
+                    };
+
+                    this.dom = this.cacheDOM();
+                    this.modalManager = new ModalManager();
+                    this.init();
+                }
+
+                cacheDOM() {
+                    const $ = (sel, ctx = document) => ctx.querySelector(sel);
+                    const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
+
+                    return {
+                        copyright: $('#copyrightText'),
+                        projectGroup: $('#projectGroup'),
+                        versionGroup: $('#versionGroup'),
+                        projectSlider: $('#projectSlider'),
+                        versionSlider: $('#versionSlider'),
+                        projectOpts: () => $$('.capsule__option', $('#projectGroup')),
+                        versionOpts: () => $$('.capsule__option', $('#versionGroup')),
+                        confirm: $('#btnConfirm'),
+                        status: $('#statusMessage'),
+                        cardArea: $('#cardArea'),
+                        emptyState: $('#emptyState'),
+                        btnGpg: $('#btnGpg'),
+                        btnLicense: $('#btnLicense'),
+                        btnTheme: $('#btnTheme'),
+                        themeIcon: $('#themeIcon'),
+                        btnAnnouncement: $('#btnAnnouncement')
+                    };
+                }
+
+                async init() {
+                    this.initTheme();
+                    this.initCapsules();
+                    this.initModals();
+                    this.initEvents();
+
+                    this.showStatus('loading', '⏳ 加载版本数据…');
+                    await this.loadData();
+
+                    if (this.state.dataLoaded) {
+                        this.hideStatus();
+                        this.setCapsuleValues('SCLTK', 'stable');
+                        this.loadGpg().catch(() => { });
+                        this.loadLicense().catch(() => { });
+                    } else {
+                        this.showStatus('error', '❌ 无法加载版本数据文件，请检查控制台错误信息');
+                    }
+                }
+
+                initTheme() {
+                    const stored = localStorage.getItem('scltk-theme');
+                    if (stored === 'dark' || stored === 'light') {
+                        this.setTheme(stored);
+                        return;
+                    }
+                    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    this.setTheme(prefersDark ? 'dark' : 'light');
+
+                    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                        if (!localStorage.getItem('scltk-theme')) {
+                            this.setTheme(e.matches ? 'dark' : 'light');
+                        }
+                    });
+                }
+
+                setTheme(theme) {
+                    this.state.theme = theme;
+                    document.documentElement.setAttribute('data-theme', theme);
+                    this.dom.themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
+                    localStorage.setItem('scltk-theme', theme);
+                }
+
+                toggleTheme() {
+                    this.setTheme(this.state.theme === 'light' ? 'dark' : 'light');
+                }
+
+                initCapsules() {
+                    this.projectCapsule = this.createCapsule(
+                        this.dom.projectSlider,
+                        this.dom.projectOpts(),
+                        (val) => { this.state.project = val; }
+                    );
+
+                    this.versionCapsule = this.createCapsule(
+                        this.dom.versionSlider,
+                        this.dom.versionOpts(),
+                        (val) => { this.state.version = val; }
+                    );
+                }
+
+                createCapsule(slider, options, onChange) {
+                    let active = 0;
+
+                    const setActive = (index) => {
+                        if (index === active) return;
+                        active = index;
+                        slider.classList.toggle('capsule__slider--right', index === 1);
+                        options.forEach((opt, i) => {
+                            const isActive = i === index;
+                            opt.classList.toggle('capsule__option--active', isActive);
+                            opt.setAttribute('aria-checked', isActive ? 'true' : 'false');
+                            opt.tabIndex = isActive ? 0 : -1;
+                        });
+                        onChange(options[index].dataset.value);
+                    };
+
+                    options.forEach((opt, index) => {
+                        opt.addEventListener('click', () => setActive(index));
+                        opt.addEventListener('keydown', (e) => {
+                            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                                e.preventDefault();
+                                const next = (index + 1) % options.length;
+                                setActive(next);
+                                options[next].focus();
+                            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                                e.preventDefault();
+                                const prev = (index - 1 + options.length) % options.length;
+                                setActive(prev);
+                                options[prev].focus();
+                            }
+                        });
+                    });
+
+                    return {
+                        getValue: () => options[active].dataset.value,
+                        setValue: (val) => {
+                            const idx = options.findIndex(o => o.dataset.value === val);
+                            if (idx >= 0) setActive(idx);
+                        }
+                    };
+                }
+
+                setCapsuleValues(project, version) {
+                    this.projectCapsule.setValue(project);
+                    this.versionCapsule.setValue(version);
+                    this.state.project = project;
+                    this.state.version = version;
+                }
+
+                initModals() {
+                    this.modalManager.register('Gpg', {
+                        title: '🔑 GPG 公钥',
+                        bodyId: 'gpgBody',
+                        initialContent: '<span class="loading-text">⏳ 加载中…</span>'
+                    });
+
+                    this.modalManager.register('License', {
+                        title: '📄 许可证',
+                        bodyId: 'licenseBody',
+                        initialContent: '<span class="loading-text">⏳ 加载中…</span>'
+                    });
+
+                    this.modalManager.register('Alt', {
+                        title: '✨ 备用获取方案',
+                        bodyId: 'altBody'
+                    });
+
+                    this.modalManager.register('Enhanced', {
+                        title: '⚙️ 增强配置',
+                        bodyId: 'enhancedBody'
+                    });
+
+                    this.modalManager.register('Announcement', {
+                        title: '📢 公告',
+                        bodyId: 'announcementBody',
+                        initialContent: '<span class="loading-text">⏳ 加载中…</span>'
+                    });
+                }
+
+                initEvents() {
+                    this.dom.btnTheme.addEventListener('click', () => this.toggleTheme());
+
+                    this.dom.btnGpg.addEventListener('click', () => {
+                        this.modalManager.open('Gpg', async (body) => {
+                            if (!this.state.flags.gpgLoaded) {
+                                body.innerHTML = '<span class="loading-text">⏳ 加载中…</span>';
+                                await this.loadGpg();
+                            }
+                            body.innerHTML =
+                                `<pre class="raw-content">${Utils.escapeHtml(this.state.cache.gpg || '加载失败')}</pre>`;
+                        });
+                    });
+
+                    this.dom.btnLicense.addEventListener('click', () => {
+                        this.modalManager.open('License', async (body) => {
+                            if (!this.state.flags.licenseLoaded) {
+                                body.innerHTML = '<span class="loading-text">⏳ 加载中…</span>';
+                                await this.loadLicense();
+                            }
+                            body.innerHTML =
+                                `<pre class="raw-content">${Utils.escapeHtml(this.state.cache.license || '加载失败')}</pre>`;
+                        });
+                    });
+
+                    this.dom.btnAnnouncement.addEventListener('click', () => {
+                        this.modalManager.open('Announcement', (body) => {
+                            if (this.state.flags.announcementLoaded && this.state.cache.announcement) {
+                                body.innerHTML = Utils.parseMarkdownLite(this.state.cache.announcement);
+                            } else {
+                                body.innerHTML = '<span class="loading-text">⏳ 加载中…</span>';
+                            }
+                        });
+                    });
+
+                    this.dom.confirm.addEventListener('click', () => this.handleConfirm());
+                    this.dom.confirm.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            this.handleConfirm();
+                        }
+                    });
+
+                    document.addEventListener('keydown', (e) => {
+                        if (e.key === 'Escape') this.modalManager.closeAll();
+                    });
+
+                    window.addEventListener('unhandledrejection', (e) => {
+                        console.error('未处理的 Promise 拒绝:', e.reason);
+                        if (!this.state.dataLoaded) {
+                            this.showStatus('error', '⚠️ 加载数据时发生错误，请刷新页面重试');
+                        }
+                    });
+                }
+
+                async loadData() {
+                    try {
+                        const resp = await Utils.fetchWithTimeout('assets/SCLTK-Website.jsonc');
+                        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                        const text = await resp.text();
+                        this.state.data = Utils.parseJsonc(text);
+                        this.state.dataLoaded = true;
+
+                        const { copyright, announcement_file } = this.state.data;
+                        this.dom.copyright.textContent = copyright || '© SCLTK Project';
+
+                        if (announcement_file && typeof announcement_file === 'string') {
+                            const file = announcement_file.trim();
+                            if (file) {
+                                this.dom.btnAnnouncement.style.display = 'inline-flex';
+                                this.loadAnnouncement(file).catch(() => { });
+                            }
+                        }
+                    } catch (err) {
+                        console.error('加载 SCLTK-Website.jsonc 失败:', err);
+                        this.showStatus('error', '❌ 加载版本数据失败: ' + err.message);
+                    }
+                }
+
+                async loadGpg() {
+                    try {
+                        const resp = await Utils.fetchWithTimeout('assets/gpg-public-key.txt');
+                        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                        const text = await resp.text();
+                        this.state.cache.gpg = text.trim() || '(空)';
+                    } catch (err) {
+                        console.error('加载 GPG 失败:', err);
+                        this.state.cache.gpg = '❌ 加载失败: ' + err.message;
+                    }
+                    this.state.flags.gpgLoaded = true;
+                }
+
+                async loadLicense() {
+                    try {
+                        const resp = await Utils.fetchWithTimeout('assets/SCLTK-License.txt');
+                        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                        const text = await resp.text();
+                        this.state.cache.license = text.trim() || '(空)';
+                    } catch (err) {
+                        console.error('加载 License 失败:', err);
+                        this.state.cache.license = '❌ 加载失败: ' + err.message;
+                    }
+                    this.state.flags.licenseLoaded = true;
+                }
+
+                async loadAnnouncement(filePath) {
+                    try {
+                        let url;
+                        if (filePath.startsWith('http://') || filePath.startsWith('https://')) {
+                            url = filePath;
+                        } else {
+                            url = new URL(filePath, window.location.href).href;
+                        }
+                        const resp = await Utils.fetchWithTimeout(url);
+                        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                        const text = await resp.text();
+                        this.state.cache.announcement = text;
+                        this.state.flags.announcementLoaded = true;
+                    } catch (err) {
+                        console.error('加载公告失败:', err);
+                        this.state.cache.announcement = '❌ 加载公告失败: ' + err.message;
+                        this.state.flags.announcementLoaded = true;
+                        this.dom.btnAnnouncement.style.display = 'none';
+                    }
+                }
+
+                renderCard(projectKey, versionKey) {
+                    const data = this.state.data;
+                    if (!data) {
+                        this.showStatus('error', '数据未加载，请刷新页面重试');
+                        return;
+                    }
+
+                    const proj = data[projectKey];
+                    if (!proj) {
+                        this.showStatus('error', `未找到项目 "${projectKey}" 的数据`);
+                        return;
+                    }
+
+                    const ver = proj[versionKey];
+                    if (!ver) {
+                        this.showStatus('error', `未找到版本 "${versionKey}" 的数据`);
+                        return;
+                    }
+
+                    const { version, program, sig, enhanced_config } = ver;
+                    if (!version || !program) {
+                        this.showStatus('error', '版本数据不完整: 缺少 version 或 program 字段');
+                        return;
+                    }
+
+                    this.hideStatus();
+                    this.state.cardProject = projectKey;
+                    this.state.cardVersion = versionKey;
+
+                    const displayName = projectKey === 'SCLTK' ? 'SCLTK' : 'SCLTK-Legacy';
+                    const versionLabel = versionKey === 'stable' ? '稳定版' : '预览版';
+                    const versionDisplay = `${versionLabel} ${version}`;
+                    const hasSig = !!sig;
+                    const hasEnhanced = !!enhanced_config;
+                    const enhancedFileName = hasEnhanced ? (enhanced_config.split('/').pop() || '配置文件') : '';
+                    const supportsWrite = !!window.showDirectoryPicker;
+
+                    const actions = [
+                        `<a class="btn btn--primary" href="${program}" download><span aria-hidden="true">📥</span> 下载程序</a>`
+                    ];
+
+                    if (supportsWrite) {
+                        actions.push(
+                            `<button class="btn btn--write" id="btnWriteToFolder"><span aria-hidden="true">💾</span> 浏览器直接写入</button>`
+                        );
+                    }
+
+                    if (hasSig) {
+                        actions.push(`<a class="btn btn--ghost" href="${sig}" download><span aria-hidden="true">🔏</span> 下载签名</a>`);
+                    } else {
+                        actions.push(`<span class="btn btn--secondary btn--disabled"><span aria-hidden="true">🔏</span> 签名文件不可用</span>`);
+                    }
+
+                    actions.push(`<button class="btn btn--ghost" id="btnAlt"><span aria-hidden="true">✨</span> 备用获取方案</button>`);
+
+                    if (hasEnhanced) {
+                        actions.push(
+                            `<button class="btn btn--ghost" id="btnEnhanced" data-path="${enhanced_config}"><span aria-hidden="true">⚙️</span> 查看增强配置 ${Utils.escapeHtml(enhancedFileName)}</button>`
+                        );
+                    }
+
+                    const sigHint = hasSig ? `
+                    <div class="download-card__sig-hint">
+                        <span aria-hidden="true">💡</span>
+                        使用 GPG 签名验证文件完整性，点击左上角「GPG 公钥」查看开发者公钥
+                    </div>
+                ` : '';
+
+                    const writeInfo = supportsWrite ? `
+                    <div class="download-card__write-info">
+                        <span aria-hidden="true">💡</span>
+                        点击「浏览器直接写入」选择文件夹，将自动写入程序${hasSig ? '、签名' : ''}${hasEnhanced ? '、增强配置' : ''}
+                    </div>
+                ` : '';
+
+                    const cardHtml = `
+                    <div class="download-card" role="article">
+                        <div class="download-card__header">
+                            <span class="download-card__name">${displayName}</span>
+                            <span class="download-card__version">${versionDisplay}</span>
+                        </div>
+                        <div class="download-card__actions">
+                            ${actions.join('')}
+                        </div>
+                        ${writeInfo}
+                        ${sigHint}
+                    </div>
+                `;
+
+                    const empty = this.dom.emptyState;
+                    if (empty) empty.remove();
+
+                    const existing = this.dom.cardArea.querySelector('.download-card');
+                    if (existing) {
+                        existing.classList.add('download-card--exit');
+                        setTimeout(() => {
+                            this.dom.cardArea.innerHTML = cardHtml;
+                            this.bindCardButtons();
+                        }, 300);
+                    } else {
+                        this.dom.cardArea.innerHTML = cardHtml;
+                        this.bindCardButtons();
+                    }
+                }
+
+                bindCardButtons() {
+                    const altBtn = document.getElementById('btnAlt');
+                    if (altBtn) altBtn.addEventListener('click', () => this.openAltModal());
+
+                    const enhancedBtn = document.getElementById('btnEnhanced');
+                    if (enhancedBtn) {
+                        enhancedBtn.addEventListener('click', () => {
+                            const path = enhancedBtn.dataset.path;
+                            if (path) this.openEnhancedModal(path);
+                        });
+                    }
+
+                    const writeBtn = document.getElementById('btnWriteToFolder');
+                    if (writeBtn) {
+                        writeBtn.addEventListener('click', () => this.writeToFolder());
+                    }
+                }
+
+                openAltModal() {
+                    const { cardProject, cardVersion, data } = this.state;
+                    if (!cardProject || !cardVersion || !data) return;
+
+                    const proj = data[cardProject];
+                    const ver = proj?.[cardVersion];
+                    if (!ver?.program) return;
+
+                    let url = ver.program;
+                    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                        url = new URL(url, window.location.href).href;
+                    }
+                    const fileName = url.split('/').pop();
+
+                    const methods = [{
+                        title: 'certutil 下载',
+                        steps: [
+                            '在任意分区的顶级目录下新建一个文件夹（例如 <code>C:\\SCLTK</code>）。',
+                            '点击文件资源管理器的地址栏。',
+                            '执行如下命令：'
+                        ],
+                        code: `certutil -urlcache -split -f "${url}" "${fileName}"`
+                    }, {
+                        title: 'VBScript 下载',
+                        steps: [
+                            '在任意分区的顶级目录下新建一个文件夹（例如 <code>C:\\SCLTK</code>），在文件夹内创建文件 <code>SCLTK.vbs</code>。',
+                            '使用文本编辑器打开 <code>SCLTK.vbs</code>，复制下方代码并保存。',
+                            '运行 <code>SCLTK.vbs</code>。弹出 "OK!" 代表下载完毕。如果失败，可以多运行几次。'
+                        ],
+                        code: `Option Explicit\nDim url, fileName\nurl = "${url}"\nfileName = "${fileName}"\nDim http, stream\nOn Error Resume Next\nSet http = CreateObject("MSXML2.ServerXMLHTTP")\nSet stream = CreateObject("ADODB.Stream")\nhttp.setOption 2, 13056\nhttp.Open "GET", url, False\nhttp.Send\nIf Err.Number <> 0 Then\n    WScript.Echo "[FAILED] Network Error: " & Err.Description\n    WScript.Quit 1\nEnd If\nIf http.Status <> 200 Then\n    WScript.Echo "[FAILED] HTTP Status: " & http.Status\n    WScript.Quit 1\nEnd If\nstream.Type = 1\nstream.Open\nstream.Write http.ResponseBody\nstream.SaveToFile fileName, 2\nstream.Close\nIf Err.Number <> 0 Then\n    WScript.Echo "[FAILED] File Write Error: " & Err.Description\n    WScript.Quit 1\nEnd If\nOn Error GoTo 0\nWScript.Echo "OK!"\nWScript.Quit 0`
+                    }, {
+                        title: 'Python 下载',
+                        steps: [
+                            '在任意分区顶级目录下新建一个文件夹（例如 <code>C:\\SCLTK</code>），在文件夹内创建文件 <code>SCLTK.py</code>。',
+                            '使用文本编辑器打开 <code>SCLTK.py</code>，复制下方代码并保存。',
+                            '使用 Python 3 运行 <code>SCLTK.py</code>。输出 "OK!" 代表下载完毕。如果失败，可以多运行几次。'
+                        ],
+                        code: `import urllib.request\nimport ssl\nimport sys\ndef download_file_ignore_ssl(url, file_path):\n    context = ssl.create_default_context()\n    context.check_hostname = False\n    context.verify_mode = ssl.CERT_NONE\n    try:\n        with urllib.request.urlopen(url, context=context) as response:\n            if response.status == 200:\n                with open(file_path, 'wb') as f:\n                    while True:\n                        chunk = response.read(8192)\n                        if not chunk:\n                            break\n                        f.write(chunk)\n                return True\n            else:\n                print(f"[FAILED] HTTP Status: {response.status}")\n                return False\n    except Exception as e:\n        print(f"[FAILED] {e}")\n        return False\ndef main():\n    print("Downloading...")\n    url = "${url}"\n    filename = "${fileName}"\n    print(f"Downloading: {filename}...")\n    if not download_file_ignore_ssl(url, filename):\n        sys.exit(1)\n    print("OK!")\n    sys.exit(0)\nif __name__ == "__main__":\n    main()`
+                    }, {
+                        title: 'C++ 下载',
+                        steps: [
+                            '在任意盘符顶级目录下新建一个文件夹（例如 <code>C:\\SCLTK</code>），在文件夹内创建文件 <code>SCLTK.cpp</code>。',
+                            '使用 Dev-C++ 打开 <code>SCLTK.cpp</code>，复制下方代码并保存。',
+                            '编译并运行。输出 "Download successful!" 代表下载完毕。如果失败，可以多运行几次。'
+                        ],
+                        code: `#include <windows.h>\n#include <iostream>\ntypedef HRESULT( WINAPI *URLDownloadToFileW_t )( LPUNKNOWN, LPCWSTR, LPCWSTR, DWORD, LPBINDSTATUSCALLBACK );\nint main()\n{\n    HMODULE hUrlMon = LoadLibraryW( L"urlmon.dll" );\n    if ( hUrlMon == NULL ) {\n        std::cerr << "Failed to load urlmon.dll" << std::endl;\n        return -1;\n    }\n    URLDownloadToFileW_t URLDownloadToFileW = ( URLDownloadToFileW_t ) GetProcAddress( hUrlMon, "URLDownloadToFileW" );\n    if ( URLDownloadToFileW == NULL ) {\n        std::cerr << "Failed to get address of URLDownloadToFileW" << std::endl;\n        FreeLibrary( hUrlMon );\n        return -1;\n    }\n    LPCWSTR url      = L"${url}";\n    LPCWSTR filePath = L"${fileName}";\n    HRESULT hr       = URLDownloadToFileW( NULL, url, filePath, 0, NULL );\n    if ( SUCCEEDED( hr ) ) {\n        std::cout << "Download successful!" << std::endl;\n    } else {\n        std::cerr << "Download failed with HRESULT: 0x" << std::hex << hr << std::endl;\n    }\n    FreeLibrary( hUrlMon );\n    return 0;\n}`
+                    }];
+
+                    const html = methods.map((m, idx) => {
+                        const stepsHtml = '<ol>' + m.steps.map(s => `<li>${s}</li>`).join('') + '</ol>';
+                        const escaped = Utils.escapeHtml(m.code);
+                        return `
+                        <div class="method">
+                            <div class="method__title">${m.title}</div>
+                            <div class="method__steps">${stepsHtml}</div>
+                            <div class="code-block">
+                                <button class="code-block__copy" data-target="code-${idx}">复制</button>
+                                <pre id="code-${idx}"><code>${escaped}</code></pre>
+                            </div>
+                        </div>
+                    `;
+                    }).join('');
+
+                    this.modalManager.open('Alt', (body) => {
+                        body.innerHTML = html;
+                        body.querySelectorAll('.code-block__copy').forEach(btn => {
+                            btn.addEventListener('click', () => ClipboardManager.copyFromElement(btn, btn.dataset
+                                .target));
+                        });
+                    });
+                }
+
+                openEnhancedModal(path) {
+                    const fileName = path.split('/').pop() || '增强配置';
+                    const titleEl = document.getElementById('modalEnhancedTitle');
+                    if (titleEl) titleEl.textContent = `⚙️ 增强配置 — ${fileName}`;
+
+                    this.modalManager.open('Enhanced', async (body) => {
+                        body.innerHTML = '<span class="loading-text">⏳ 加载中…</span>';
+                        try {
+                            const resp = await Utils.fetchWithTimeout(path);
+                            if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                            const text = await resp.text();
+                            const escaped = Utils.escapeHtml(text);
+                            body.innerHTML = `
+                            <div class="code-block">
+                                <button class="code-block__copy" data-target="enhanced-pre">复制</button>
+                                <pre id="enhanced-pre"><code>${escaped}</code></pre>
+                            </div>
+                        `;
+                            const copyBtn = body.querySelector('.code-block__copy');
+                            if (copyBtn) {
+                                copyBtn.addEventListener('click', () => ClipboardManager.copyFromElement(copyBtn,
+                                    'enhanced-pre'));
+                            }
+                        } catch (err) {
+                            body.innerHTML =
+                                `<div class="code-block"><pre style="color: var(--text-secondary);">❌ 加载失败: ${Utils.escapeHtml(err.message)}</pre></div>`;
+                        }
+                    });
+                }
+
+                showStatus(type, msg) {
+                    const el = this.dom.status;
+                    el.className = 'status';
+                    el.textContent = msg;
+                    el.style.display = msg ? 'block' : 'none';
+
+                    if (type === 'error') {
+                        el.classList.add('status--error');
+                        this.dom.confirm.disabled = true;
+                    } else if (type === 'loading') {
+                        el.classList.add('status--loading');
+                        this.dom.confirm.disabled = false;
+                    } else if (type === 'success') {
+                        el.classList.add('status--success');
+                        this.dom.confirm.disabled = false;
+                    } else {
+                        this.dom.confirm.disabled = false;
+                    }
+                }
+
+                hideStatus() {
+                    this.dom.status.style.display = 'none';
+                    this.dom.status.className = 'status';
+                    this.dom.confirm.disabled = false;
+                }
+
+                handleConfirm() {
+                    if (!this.state.dataLoaded) {
+                        this.showStatus('error', '⏳ 数据加载中，请稍候…');
+                        return;
+                    }
+                    const { project, version, data } = this.state;
+                    if (!data) {
+                        this.showStatus('error', '❌ 数据加载失败，请刷新页面');
+                        return;
+                    }
+                    if (!data[project]) {
+                        this.showStatus('error', `项目 "${project}" 不存在`);
+                        return;
+                    }
+                    if (!data[project][version]) {
+                        this.showStatus('error', `版本 "${version}" 不存在于 "${project}" 中`);
+                        return;
+                    }
+                    this.renderCard(project, version);
+                }
+
+                async writeToFolder() {
+                    if (this.state.writeInProgress) return;
+
+                    const { cardProject, cardVersion, data } = this.state;
+                    if (!cardProject || !cardVersion || !data) {
+                        this.showStatus('error', '请先选择版本并点击「确定」');
+                        return;
+                    }
+
+                    const proj = data[cardProject];
+                    const ver = proj?.[cardVersion];
+                    if (!ver) {
+                        this.showStatus('error', '版本数据无效');
+                        return;
+                    }
+
+                    if (!window.showDirectoryPicker) {
+                        this.showStatus('error', '❌ 您的浏览器不支持文件系统访问 API，请使用最新版 Chrome/Edge');
+                        return;
+                    }
+
+                    const fileList = [];
+                    const programUrl = new URL(ver.program, window.location.href).href;
+                    fileList.push({
+                        url: programUrl,
+                        fileName: Utils.getFileNameFromUrl(programUrl),
+                        type: '程序文件'
+                    });
+
+                    if (ver.sig) {
+                        const sigUrl = new URL(ver.sig, window.location.href).href;
+                        fileList.push({
+                            url: sigUrl,
+                            fileName: Utils.getFileNameFromUrl(sigUrl),
+                            type: '签名文件'
+                        });
+                    }
+
+                    if (ver.enhanced_config) {
+                        const enhancedUrl = new URL(ver.enhanced_config, window.location.href).href;
+                        fileList.push({
+                            url: enhancedUrl,
+                            fileName: Utils.getFileNameFromUrl(enhancedUrl),
+                            type: '增强配置'
+                        });
+                    }
+
+                    this.showStatus('loading', '📂 请选择一个目标文件夹…');
+
+                    let dirHandle;
+                    try {
+                        dirHandle = await window.showDirectoryPicker();
+                    } catch (err) {
+                        if (err.name === 'AbortError' || err.message?.includes('abort')) {
+                            this.showStatus('error', '⏹️ 已取消选择文件夹');
+                            setTimeout(() => this.hideStatus(), 3000);
+                        } else {
+                            this.showStatus('error', '❌ 选择文件夹失败: ' + err.message);
+                        }
+                        return;
+                    }
+
+                    this.state.writeInProgress = true;
+                    const writeBtn = document.getElementById('btnWriteToFolder');
+                    if (writeBtn) {
+                        writeBtn.disabled = true;
+                        writeBtn.innerHTML = '<span class="spinner"></span> 写入中…';
+                    }
+
+                    this.showStatus('loading', '⏳ 正在下载并写入文件…');
+
+                    const results = [];
+                    let allSuccess = true;
+
+                    for (const file of fileList) {
+                        try {
+                            const resp = await Utils.fetchWithTimeout(file.url, {}, 30000);
+                            if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+
+                            const contentLength = resp.headers.get('content-length');
+                            const size = contentLength ? parseInt(contentLength, 10) : null;
+                            const blob = await resp.blob();
+
+                            const fileHandle = await dirHandle.getFileHandle(file.fileName, { create: true });
+                            const writable = await fileHandle.createWritable();
+                            await writable.write(blob);
+                            await writable.close();
+
+                            results.push({
+                                ...file,
+                                size: blob.size,
+                                success: true
+                            });
+                        } catch (err) {
+                            results.push({
+                                ...file,
+                                error: err.message,
+                                success: false
+                            });
+                            allSuccess = false;
+                            break;
+                        }
+                    }
+
+                    this.state.writeInProgress = false;
+                    if (writeBtn) {
+                        writeBtn.disabled = false;
+                        writeBtn.innerHTML = '<span aria-hidden="true">💾</span> 浏览器直接写入';
+                    }
+
+                    if (allSuccess) {
+                        const totalSize = results.reduce((sum, r) => sum + (r.size || 0), 0);
+                        const sizeStr = Utils.formatFileSize(totalSize);
+                        const fileNames = results.map(r => `「${r.fileName}」`).join('、');
+                        this.showStatus('success', `✅ 已成功写入 ${fileNames}（共 ${sizeStr}）到您选择的文件夹`);
+                        setTimeout(() => this.hideStatus(), 6000);
+                    } else {
+                        const failed = results.find(r => !r.success);
+                        if (failed) {
+                            this.showStatus('error', `❌ 写入失败: ${failed.fileName} — ${failed.error}`);
+                        } else {
+                            this.showStatus('error', '❌ 写入过程中发生未知错误');
+                        }
+                    }
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', () => {
+                new SCLTKApp();
+            });
+        })();
+    </script>
+
+</body>
+
+</html>
