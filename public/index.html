@@ -68,18 +68,6 @@
             --success-border: rgba(52, 211, 153, 0.25);
         }
 
-        @media (prefers-reduced-motion: reduce) {
-
-            *,
-            *::before,
-            *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-                scroll-behavior: auto !important;
-            }
-        }
-
         *,
         *::before,
         *::after {
@@ -105,6 +93,18 @@
             align-items: center;
             padding: 12px 24px 48px;
             transition: background var(--transition-soft), color var(--transition-soft);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
         }
 
         .app {
@@ -609,6 +609,7 @@
             border: 1px solid var(--border-light);
             transform: scale(0.95) translateY(12px);
             transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            overflow: hidden;
         }
 
         .modal--open .modal__box {
@@ -732,11 +733,6 @@
             font-size: 0.8rem;
         }
 
-        .loading-text {
-            color: var(--text-muted);
-            font-style: italic;
-        }
-
         .announcement-content {
             font-size: 0.95rem;
             line-height: 1.7;
@@ -785,7 +781,6 @@
         }
 
         .announcement-content a:hover {
-            text-decoration: none;
             border-bottom-color: var(--accent);
         }
 
@@ -862,52 +857,129 @@
             font-size: 0.85em;
         }
 
-        .write-progress {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            padding: 4px 0;
-        }
-
-        .write-progress__item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .base64-btn {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 8px 20px;
+            border-radius: var(--radius-full);
+            font-family: var(--font-sans);
             font-size: 0.85rem;
-            color: var(--text-secondary);
-            padding: 4px 8px;
-            border-radius: var(--radius-sm);
-            transition: all var(--transition-soft);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            box-shadow: var(--shadow-btn);
+            letter-spacing: 0.3px;
+            line-height: 1.5;
         }
 
-        .write-progress__item--done {
-            color: var(--success);
-            background: var(--success-bg);
+        .base64-btn:hover:not(:disabled) {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(79, 124, 255, 0.4);
         }
 
-        .write-progress__item--error {
-            color: var(--error);
-            background: var(--error-bg);
+        .base64-btn:active:not(:disabled) {
+            transform: translateY(0);
         }
 
-        .write-progress__item .status-icon {
-            font-size: 1rem;
-            width: 20px;
-            text-align: center;
-            flex-shrink: 0;
+        .base64-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
 
-        .write-progress__item .file-name {
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
+        .base64-btn .spinner-small {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid #fff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            vertical-align: middle;
+            margin-right: 6px;
+        }
+
+        .base64-result-area {
+            padding: 6px 0 2px 0;
+        }
+
+        .base64-result-area pre {
+            max-height: 240px;
+            overflow-y: auto;
+            white-space: pre-wrap;
             word-break: break-all;
+            font-size: 0.75rem;
+            line-height: 1.5;
+            padding: 10px 14px;
+            background: var(--bg-code);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-light);
+            margin: 0;
+            font-family: var(--font-mono);
+            color: var(--text-secondary);
         }
 
-        .write-progress__item .file-size {
-            font-size: 0.7rem;
+        .base64-status-msg {
+            font-size: 0.85rem;
             color: var(--text-muted);
-            margin-left: auto;
-            flex-shrink: 0;
+            padding: 4px 0 8px 0;
+        }
+
+        .base64-status-msg--error {
+            color: var(--error);
+        }
+
+        .base64-status-msg--success {
+            color: var(--success);
+        }
+
+        .code-block-label {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            background: var(--bg-capsule);
+            padding: 2px 12px;
+            border-radius: var(--radius-full);
+            margin: 6px 0 4px 18px;
+            letter-spacing: 0.3px;
+        }
+
+        .loading-text {
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-light);
+            border-radius: 999px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
         }
 
         @media (max-width: 768px) {
@@ -999,35 +1071,6 @@
                 padding: 10px 12px;
             }
         }
-
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--border-light);
-            border-radius: 999px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--text-muted);
-        }
-
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            border: 0;
-        }
     </style>
 </head>
 
@@ -1114,37 +1157,38 @@
         (function () {
             'use strict';
 
-            class Utils {
-                static escapeHtml(text) {
-                    const div = document.createElement('div');
-                    div.textContent = text;
-                    return div.innerHTML;
-                }
+            const Utils = {
+                escapeHtml(text) {
+                    const d = document.createElement('div');
+                    d.textContent = text;
+                    return d.innerHTML;
+                },
 
-                static async fetchWithTimeout(url, options = {}, timeout = 10000) {
-                    const controller = new AbortController();
-                    const id = setTimeout(() => controller.abort(), timeout);
+                async fetchWithTimeout(url, options = {}, timeout = 10000) {
+                    const ctrl = new AbortController();
+                    const id = setTimeout(() => ctrl.abort(), timeout);
                     try {
-                        const response = await fetch(url, { ...options, signal: controller.signal });
+                        const resp = await fetch(url, { ...options, signal: ctrl.signal });
                         clearTimeout(id);
-                        return response;
+                        return resp;
                     } catch (err) {
                         clearTimeout(id);
                         if (err.name === 'AbortError') throw new Error('请求超时');
                         throw err;
                     }
-                }
+                },
 
-                static parseJsonc(text) {
+                parseJsonc(text) {
                     let out = '';
                     let inStr = false;
                     let strChar = '';
                     let inComment = false;
                     let i = 0;
-                    while (i < text.length) {
+                    const len = text.length;
+                    while (i < len) {
                         const ch = text[i];
                         if (!inComment && !inStr && ch === '/' && text[i + 1] === '/') {
-                            while (i < text.length && text[i] !== '\n' && text[i] !== '\r') i++;
+                            while (i < len && text[i] !== '\n' && text[i] !== '\r') i++;
                             continue;
                         }
                         if (!inComment && !inStr && ch === '/' && text[i + 1] === '*') {
@@ -1175,243 +1219,253 @@
                         i++;
                     }
                     return JSON.parse(out);
-                }
+                },
 
-                static parseMarkdownLite(text) {
+                parseMarkdownLite(text) {
                     const lines = text.split('\n');
                     const blocks = [];
-                    let currentList = [];
-                    let currentCodeBlock = [];
-                    let inCodeBlock = false;
+                    let list = [];
+                    let code = [];
+                    let inCode = false;
 
                     const flushList = () => {
-                        if (currentList.length) {
-                            blocks.push('<ul>' + currentList.map(item => `<li>${Utils.escapeHtml(item)}</li>`).join('') + '</ul>');
-                            currentList = [];
+                        if (list.length) {
+                            blocks.push('<ul>' + list.map(item =>
+                                `<li>${Utils.escapeHtml(item)}</li>`).join('') + '</ul>');
+                            list = [];
                         }
                     };
-
-                    const flushCodeBlock = () => {
-                        if (currentCodeBlock.length) {
-                            const code = Utils.escapeHtml(currentCodeBlock.join('\n'));
-                            blocks.push(`<pre><code>${code}</code></pre>`);
-                            currentCodeBlock = [];
+                    const flushCode = () => {
+                        if (code.length) {
+                            blocks.push(`<pre><code>${Utils.escapeHtml(code.join('\n'))}</code></pre>`);
+                            code = [];
                         }
                     };
 
                     for (const line of lines) {
-                        const trimmed = line.trim();
-
-                        if (trimmed.startsWith('```')) {
-                            if (inCodeBlock) {
-                                flushCodeBlock();
-                                inCodeBlock = false;
+                        const t = line.trim();
+                        if (t.startsWith('```')) {
+                            if (inCode) {
+                                flushCode();
+                                inCode = false;
                             } else {
                                 flushList();
-                                inCodeBlock = true;
+                                inCode = true;
                             }
                             continue;
                         }
-
-                        if (inCodeBlock) {
-                            currentCodeBlock.push(line);
+                        if (inCode) { code.push(line); continue; }
+                        if (!t) { flushList(); continue; }
+                        if (/^[-*]\s+/.test(t)) {
+                            list.push(t.replace(/^[-*]\s+/, ''));
                             continue;
                         }
-
-                        if (!trimmed) {
-                            flushList();
-                            continue;
-                        }
-
-                        if (/^[-*]\s+/.test(trimmed)) {
-                            currentList.push(trimmed.replace(/^[-*]\s+/, ''));
-                            continue;
-                        }
-
                         flushList();
-
-                        const headingMatch = trimmed.match(/^(#{1,4})\s+(.*)$/);
-                        if (headingMatch) {
-                            const level = headingMatch[1].length + 1;
-                            const content = Utils.escapeHtml(headingMatch[2]);
-                            blocks.push(`<h${level}>${content}</h${level}>`);
+                        const hd = t.match(/^(#{1,4})\s+(.*)$/);
+                        if (hd) {
+                            const level = hd[1].length + 1;
+                            blocks.push(`<h${level}>${Utils.escapeHtml(hd[2])}</h${level}>`);
                             continue;
                         }
-
-                        blocks.push(Utils.escapeHtml(line));
-                    }
-
-                    flushList();
-                    if (inCodeBlock) flushCodeBlock();
-
-                    const processed = blocks.map(block => {
-                        if (block.startsWith('<h') || block.startsWith('<ul') || block.startsWith('<pre')) {
-                            return block;
-                        }
-                        let content = block;
+                        let content = Utils.escapeHtml(line);
                         content = content.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
                         content = content.replace(/\*(.+?)\*/g, '<em>$1</em>');
                         content = content.replace(/`([^`]+)`/g, '<code>$1</code>');
-                        content = content.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
-                        return content ? `<p>${content}</p>` : '';
-                    });
+                        content = content.replace(/\[([^\]]+)\]\(([^)]+)\)/g,
+                            '<a href="$2" target="_blank" rel="noopener">$1</a>');
+                        if (content) blocks.push(`<p>${content}</p>`);
+                    }
+                    flushList();
+                    if (inCode) flushCode();
+                    return `<div class="announcement-content">${blocks.join('')}</div>`;
+                },
 
-                    return `<div class="announcement-content">${processed.join('')}</div>`;
-                }
-
-                static formatFileSize(bytes) {
+                formatFileSize(bytes) {
                     if (bytes < 1024) return bytes + ' B';
-                    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
-                    if (bytes < 1024 * 1024 * 1024) return (bytes / 1024 / 1024).toFixed(1) + ' MB';
-                    return (bytes / 1024 / 1024 / 1024).toFixed(1) + ' GB';
-                }
+                    if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+                    if (bytes < 1073741824) return (bytes / 1048576).toFixed(1) + ' MB';
+                    return (bytes / 1073741824).toFixed(1) + ' GB';
+                },
 
-                static getFileNameFromUrl(url) {
+                getFileNameFromUrl(url) {
                     try {
                         const u = new URL(url);
-                        const path = u.pathname;
-                        const segments = path.split('/');
-                        let fileName = segments.pop() || 'file';
-                        if (fileName.includes('?')) fileName = fileName.split('?')[0];
-                        if (fileName.includes('#')) fileName = fileName.split('#')[0];
-                        return decodeURIComponent(fileName) || 'file';
+                        let name = u.pathname.split('/').pop() || 'file';
+                        name = name.split('?')[0].split('#')[0];
+                        return decodeURIComponent(name) || 'file';
                     } catch {
-                        return url.split('/').pop()?.split('?')[0]?.split('#')[0] || 'file';
+                        const parts = url.split('/');
+                        let name = parts.pop() || 'file';
+                        name = name.split('?')[0].split('#')[0];
+                        return name || 'file';
                     }
                 }
-            }
+            };
 
-            class ClipboardManager {
-                static async copy(text) {
+            const Clipboard = {
+                async copy(text) {
                     if (navigator.clipboard && window.isSecureContext) {
                         await navigator.clipboard.writeText(text);
                         return true;
                     }
-                    const textarea = document.createElement('textarea');
-                    textarea.value = text;
-                    textarea.style.position = 'fixed';
-                    textarea.style.opacity = '0';
-                    document.body.appendChild(textarea);
-                    textarea.select();
-                    const success = document.execCommand('copy');
-                    document.body.removeChild(textarea);
-                    return success;
-                }
+                    const ta = document.createElement('textarea');
+                    ta.value = text;
+                    ta.style.cssText = 'position:fixed;opacity:0';
+                    document.body.appendChild(ta);
+                    ta.select();
+                    const ok = document.execCommand('copy');
+                    document.body.removeChild(ta);
+                    return ok;
+                },
 
-                static async copyFromElement(button, targetId) {
+                async copyFromElement(btn, targetId) {
                     const pre = document.getElementById(targetId);
                     if (!pre) return false;
-                    const success = await this.copy(pre.textContent);
-                    if (success) this.showFeedback(button);
-                    return success;
-                }
+                    const ok = await this.copy(pre.textContent);
+                    if (ok) this.feedback(btn);
+                    return ok;
+                },
 
-                static showFeedback(button) {
-                    const originalText = button.textContent;
-                    button.textContent = '已复制';
-                    button.classList.add('code-block__copy--copied');
+                feedback(btn) {
+                    const orig = btn.textContent;
+                    btn.textContent = '已复制';
+                    btn.classList.add('code-block__copy--copied');
                     setTimeout(() => {
-                        button.textContent = originalText;
-                        button.classList.remove('code-block__copy--copied');
+                        btn.textContent = orig;
+                        btn.classList.remove('code-block__copy--copied');
                     }, 2000);
                 }
-            }
+            };
 
             class ModalManager {
-                constructor() {
-                    this.activeModal = null;
-                    this.modals = new Map();
-                    this.container = document.getElementById('modalContainer');
+                constructor(container) {
+                    this.container = container;
+                    this.active = null;
+                    this.registry = new Map();
                 }
 
                 register(id, config) {
-                    this.modals.set(id, config);
-                    this.renderModal(id, config);
-                    this.bindEvents(id);
+                    this.registry.set(id, config);
+                    this._render(id, config);
+                    this._bind(id);
                 }
 
-                renderModal(id, config) {
-                    const { title, bodyId, initialContent } = config;
+                _render(id, config) {
                     const html = `
                     <div class="modal" id="modal${id}" role="dialog" aria-modal="true" aria-labelledby="modal${id}Title">
                         <div class="modal__box">
                             <div class="modal__header">
-                                <h2 class="modal__title" id="modal${id}Title">${title}</h2>
+                                <h2 class="modal__title" id="modal${id}Title">${config.title}</h2>
                                 <button class="modal__close" id="modal${id}Close" aria-label="关闭">✕</button>
                             </div>
-                            <div class="modal__body" id="${bodyId}">
-                                ${initialContent || '<span class="loading-text">⏳ 加载中…</span>'}
+                            <div class="modal__body" id="${config.bodyId}">
+                                ${config.initialContent || '<span class="loading-text">⏳ 加载中…</span>'}
                             </div>
                         </div>
-                    </div>
-                `;
-                    const wrapper = document.createElement('div');
-                    wrapper.innerHTML = html.trim();
-                    this.container.appendChild(wrapper.firstElementChild);
+                    </div>`;
+                    const wrap = document.createElement('div');
+                    wrap.innerHTML = html.trim();
+                    this.container.appendChild(wrap.firstElementChild);
                 }
 
-                bindEvents(id) {
+                _bind(id) {
                     const modal = document.getElementById(`modal${id}`);
-                    const closeBtn = document.getElementById(`modal${id}Close`);
-                    closeBtn.addEventListener('click', () => this.close(id));
-                    modal.addEventListener('click', (e) => {
-                        if (e.target === modal) this.close(id);
-                    });
+                    const close = document.getElementById(`modal${id}Close`);
+                    close.addEventListener('click', () => this.close(id));
+                    modal.addEventListener('click', (e) => { if (e.target === modal) this.close(id); });
                 }
 
-                open(id, contentCallback) {
+                open(id, contentFn) {
                     const modal = document.getElementById(`modal${id}`);
                     if (!modal) return;
-                    if (contentCallback) {
+                    if (contentFn) {
                         const body = modal.querySelector('.modal__body');
-                        contentCallback(body);
+                        contentFn(body);
                     }
                     modal.classList.add('modal--open');
-                    this.activeModal = modal;
+                    this.active = modal;
                     document.body.style.overflow = 'hidden';
                 }
 
                 close(id) {
-                    const modal = id ? document.getElementById(`modal${id}`) : this.activeModal;
+                    const modal = id ? document.getElementById(`modal${id}`) : this.active;
                     if (!modal) return;
                     modal.classList.remove('modal--open');
-                    if (this.activeModal === modal) {
-                        this.activeModal = null;
+                    if (this.active === modal) {
+                        this.active = null;
                         document.body.style.overflow = '';
                     }
                 }
 
                 closeAll() {
                     document.querySelectorAll('.modal--open').forEach(m => m.classList.remove('modal--open'));
-                    this.activeModal = null;
+                    this.active = null;
                     document.body.style.overflow = '';
                 }
+            }
+
+            function createCapsule(slider, options, onChange) {
+                let active = 0;
+                const setActive = (idx) => {
+                    if (idx === active) return;
+                    active = idx;
+                    slider.classList.toggle('capsule__slider--right', idx === 1);
+                    options.forEach((opt, i) => {
+                        const isActive = i === idx;
+                        opt.classList.toggle('capsule__option--active', isActive);
+                        opt.setAttribute('aria-checked', isActive ? 'true' : 'false');
+                        opt.tabIndex = isActive ? 0 : -1;
+                    });
+                    onChange(options[idx].dataset.value);
+                };
+                options.forEach((opt, idx) => {
+                    opt.addEventListener('click', () => setActive(idx));
+                    opt.addEventListener('keydown', (e) => {
+                        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                            e.preventDefault();
+                            const next = (idx + 1) % options.length;
+                            setActive(next);
+                            options[next].focus();
+                        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                            e.preventDefault();
+                            const prev = (idx - 1 + options.length) % options.length;
+                            setActive(prev);
+                            options[prev].focus();
+                        }
+                    });
+                });
+                return {
+                    getValue: () => options[active].dataset.value,
+                    setValue: (val) => {
+                        const idx = options.findIndex(o => o.dataset.value === val);
+                        if (idx >= 0) setActive(idx);
+                    }
+                };
             }
 
             class SCLTKApp {
                 constructor() {
                     this.state = {
                         data: null,
-                        dataLoaded: false,
+                        loaded: false,
                         project: 'SCLTK',
                         version: 'stable',
                         cardProject: '',
                         cardVersion: '',
                         theme: 'light',
                         cache: { gpg: null, license: null, announcement: null },
-                        flags: { gpgLoaded: false, licenseLoaded: false, announcementLoaded: false },
-                        writeInProgress: false
+                        flags: { gpg: false, license: false, announcement: false },
+                        writing: false
                     };
 
-                    this.dom = this.cacheDOM();
-                    this.modalManager = new ModalManager();
-                    this.init();
+                    this.dom = this._cacheDom();
+                    this.modal = new ModalManager(this.dom.modalContainer);
+                    this._init();
                 }
 
-                cacheDOM() {
-                    const $ = (sel, ctx = document) => ctx.querySelector(sel);
-                    const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
-
+                _cacheDom() {
+                    const $ = (s, ctx = document) => ctx.querySelector(s);
+                    const $$ = (s, ctx = document) => [...ctx.querySelectorAll(s)];
                     return {
                         copyright: $('#copyrightText'),
                         projectGroup: $('#projectGroup'),
@@ -1428,157 +1482,110 @@
                         btnLicense: $('#btnLicense'),
                         btnTheme: $('#btnTheme'),
                         themeIcon: $('#themeIcon'),
-                        btnAnnouncement: $('#btnAnnouncement')
+                        btnAnnouncement: $('#btnAnnouncement'),
+                        modalContainer: $('#modalContainer')
                     };
                 }
 
-                async init() {
-                    this.initTheme();
-                    this.initCapsules();
-                    this.initModals();
-                    this.initEvents();
+                async _init() {
+                    this._initTheme();
+                    this._initCapsules();
+                    this._initModals();
+                    this._bindEvents();
 
-                    this.showStatus('loading', '⏳ 加载版本数据…');
-                    await this.loadData();
+                    this._showStatus('loading', '⏳ 加载版本数据…');
+                    await this._loadData();
 
-                    if (this.state.dataLoaded) {
-                        this.hideStatus();
-                        this.setCapsuleValues('SCLTK', 'stable');
-                        this.loadGpg().catch(() => { });
-                        this.loadLicense().catch(() => { });
+                    if (this.state.loaded) {
+                        this._hideStatus();
+                        this._setCapsuleValues('SCLTK', 'stable');
+                        this._loadGpg().catch(() => { });
+                        this._loadLicense().catch(() => { });
                     } else {
-                        this.showStatus('error', '❌ 无法加载版本数据文件，请检查控制台错误信息');
+                        this._showStatus('error', '❌ 无法加载版本数据文件，请检查控制台错误信息');
                     }
                 }
 
-                initTheme() {
+                _initTheme() {
                     const stored = localStorage.getItem('scltk-theme');
                     if (stored === 'dark' || stored === 'light') {
-                        this.setTheme(stored);
+                        this._setTheme(stored);
                         return;
                     }
-                    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                    this.setTheme(prefersDark ? 'dark' : 'light');
-
+                    const prefers = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    this._setTheme(prefers ? 'dark' : 'light');
                     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
                         if (!localStorage.getItem('scltk-theme')) {
-                            this.setTheme(e.matches ? 'dark' : 'light');
+                            this._setTheme(e.matches ? 'dark' : 'light');
                         }
                     });
                 }
 
-                setTheme(theme) {
+                _setTheme(theme) {
                     this.state.theme = theme;
                     document.documentElement.setAttribute('data-theme', theme);
                     this.dom.themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
                     localStorage.setItem('scltk-theme', theme);
                 }
 
-                toggleTheme() {
-                    this.setTheme(this.state.theme === 'light' ? 'dark' : 'light');
+                _toggleTheme() {
+                    this._setTheme(this.state.theme === 'light' ? 'dark' : 'light');
                 }
 
-                initCapsules() {
-                    this.projectCapsule = this.createCapsule(
+                _initCapsules() {
+                    this.projectCapsule = createCapsule(
                         this.dom.projectSlider,
                         this.dom.projectOpts(),
-                        (val) => { this.state.project = val; }
+                        (v) => { this.state.project = v; }
                     );
-
-                    this.versionCapsule = this.createCapsule(
+                    this.versionCapsule = createCapsule(
                         this.dom.versionSlider,
                         this.dom.versionOpts(),
-                        (val) => { this.state.version = val; }
+                        (v) => { this.state.version = v; }
                     );
                 }
 
-                createCapsule(slider, options, onChange) {
-                    let active = 0;
-
-                    const setActive = (index) => {
-                        if (index === active) return;
-                        active = index;
-                        slider.classList.toggle('capsule__slider--right', index === 1);
-                        options.forEach((opt, i) => {
-                            const isActive = i === index;
-                            opt.classList.toggle('capsule__option--active', isActive);
-                            opt.setAttribute('aria-checked', isActive ? 'true' : 'false');
-                            opt.tabIndex = isActive ? 0 : -1;
-                        });
-                        onChange(options[index].dataset.value);
-                    };
-
-                    options.forEach((opt, index) => {
-                        opt.addEventListener('click', () => setActive(index));
-                        opt.addEventListener('keydown', (e) => {
-                            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-                                e.preventDefault();
-                                const next = (index + 1) % options.length;
-                                setActive(next);
-                                options[next].focus();
-                            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-                                e.preventDefault();
-                                const prev = (index - 1 + options.length) % options.length;
-                                setActive(prev);
-                                options[prev].focus();
-                            }
-                        });
-                    });
-
-                    return {
-                        getValue: () => options[active].dataset.value,
-                        setValue: (val) => {
-                            const idx = options.findIndex(o => o.dataset.value === val);
-                            if (idx >= 0) setActive(idx);
-                        }
-                    };
-                }
-
-                setCapsuleValues(project, version) {
+                _setCapsuleValues(project, version) {
                     this.projectCapsule.setValue(project);
                     this.versionCapsule.setValue(version);
                     this.state.project = project;
                     this.state.version = version;
                 }
 
-                initModals() {
-                    this.modalManager.register('Gpg', {
+                _initModals() {
+                    this.modal.register('Gpg', {
                         title: '🔑 GPG 公钥',
                         bodyId: 'gpgBody',
                         initialContent: '<span class="loading-text">⏳ 加载中…</span>'
                     });
-
-                    this.modalManager.register('License', {
+                    this.modal.register('License', {
                         title: '📄 许可证',
                         bodyId: 'licenseBody',
                         initialContent: '<span class="loading-text">⏳ 加载中…</span>'
                     });
-
-                    this.modalManager.register('Alt', {
+                    this.modal.register('Alt', {
                         title: '✨ 备用获取方案',
                         bodyId: 'altBody'
                     });
-
-                    this.modalManager.register('Enhanced', {
+                    this.modal.register('Enhanced', {
                         title: '⚙️ 增强配置',
                         bodyId: 'enhancedBody'
                     });
-
-                    this.modalManager.register('Announcement', {
+                    this.modal.register('Announcement', {
                         title: '📢 公告',
                         bodyId: 'announcementBody',
                         initialContent: '<span class="loading-text">⏳ 加载中…</span>'
                     });
                 }
 
-                initEvents() {
-                    this.dom.btnTheme.addEventListener('click', () => this.toggleTheme());
+                _bindEvents() {
+                    this.dom.btnTheme.addEventListener('click', () => this._toggleTheme());
 
                     this.dom.btnGpg.addEventListener('click', () => {
-                        this.modalManager.open('Gpg', async (body) => {
-                            if (!this.state.flags.gpgLoaded) {
+                        this.modal.open('Gpg', async (body) => {
+                            if (!this.state.flags.gpg) {
                                 body.innerHTML = '<span class="loading-text">⏳ 加载中…</span>';
-                                await this.loadGpg();
+                                await this._loadGpg();
                             }
                             body.innerHTML =
                                 `<pre class="raw-content">${Utils.escapeHtml(this.state.cache.gpg || '加载失败')}</pre>`;
@@ -1586,10 +1593,10 @@
                     });
 
                     this.dom.btnLicense.addEventListener('click', () => {
-                        this.modalManager.open('License', async (body) => {
-                            if (!this.state.flags.licenseLoaded) {
+                        this.modal.open('License', async (body) => {
+                            if (!this.state.flags.license) {
                                 body.innerHTML = '<span class="loading-text">⏳ 加载中…</span>';
-                                await this.loadLicense();
+                                await this._loadLicense();
                             }
                             body.innerHTML =
                                 `<pre class="raw-content">${Utils.escapeHtml(this.state.cache.license || '加载失败')}</pre>`;
@@ -1597,8 +1604,8 @@
                     });
 
                     this.dom.btnAnnouncement.addEventListener('click', () => {
-                        this.modalManager.open('Announcement', (body) => {
-                            if (this.state.flags.announcementLoaded && this.state.cache.announcement) {
+                        this.modal.open('Announcement', (body) => {
+                            if (this.state.flags.announcement && this.state.cache.announcement) {
                                 body.innerHTML = Utils.parseMarkdownLite(this.state.cache.announcement);
                             } else {
                                 body.innerHTML = '<span class="loading-text">⏳ 加载中…</span>';
@@ -1606,33 +1613,33 @@
                         });
                     });
 
-                    this.dom.confirm.addEventListener('click', () => this.handleConfirm());
+                    this.dom.confirm.addEventListener('click', () => this._handleConfirm());
                     this.dom.confirm.addEventListener('keydown', (e) => {
                         if (e.key === 'Enter' || e.key === ' ') {
                             e.preventDefault();
-                            this.handleConfirm();
+                            this._handleConfirm();
                         }
                     });
 
                     document.addEventListener('keydown', (e) => {
-                        if (e.key === 'Escape') this.modalManager.closeAll();
+                        if (e.key === 'Escape') this.modal.closeAll();
                     });
 
                     window.addEventListener('unhandledrejection', (e) => {
                         console.error('未处理的 Promise 拒绝:', e.reason);
-                        if (!this.state.dataLoaded) {
-                            this.showStatus('error', '⚠️ 加载数据时发生错误，请刷新页面重试');
+                        if (!this.state.loaded) {
+                            this._showStatus('error', '⚠️ 加载数据时发生错误，请刷新页面重试');
                         }
                     });
                 }
 
-                async loadData() {
+                async _loadData() {
                     try {
                         const resp = await Utils.fetchWithTimeout('assets/SCLTK-Website.jsonc');
                         if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
                         const text = await resp.text();
                         this.state.data = Utils.parseJsonc(text);
-                        this.state.dataLoaded = true;
+                        this.state.loaded = true;
 
                         const { copyright, announcement_file } = this.state.data;
                         this.dom.copyright.textContent = copyright || '© SCLTK Project';
@@ -1641,16 +1648,16 @@
                             const file = announcement_file.trim();
                             if (file) {
                                 this.dom.btnAnnouncement.style.display = 'inline-flex';
-                                this.loadAnnouncement(file).catch(() => { });
+                                this._loadAnnouncement(file).catch(() => { });
                             }
                         }
                     } catch (err) {
                         console.error('加载 SCLTK-Website.jsonc 失败:', err);
-                        this.showStatus('error', '❌ 加载版本数据失败: ' + err.message);
+                        this._showStatus('error', '❌ 加载版本数据失败: ' + err.message);
                     }
                 }
 
-                async loadGpg() {
+                async _loadGpg() {
                     try {
                         const resp = await Utils.fetchWithTimeout('assets/gpg-public-key.txt');
                         if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
@@ -1660,10 +1667,10 @@
                         console.error('加载 GPG 失败:', err);
                         this.state.cache.gpg = '❌ 加载失败: ' + err.message;
                     }
-                    this.state.flags.gpgLoaded = true;
+                    this.state.flags.gpg = true;
                 }
 
-                async loadLicense() {
+                async _loadLicense() {
                     try {
                         const resp = await Utils.fetchWithTimeout('assets/SCLTK-License.txt');
                         if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
@@ -1673,261 +1680,29 @@
                         console.error('加载 License 失败:', err);
                         this.state.cache.license = '❌ 加载失败: ' + err.message;
                     }
-                    this.state.flags.licenseLoaded = true;
+                    this.state.flags.license = true;
                 }
 
-                async loadAnnouncement(filePath) {
+                async _loadAnnouncement(filePath) {
                     try {
-                        let url;
-                        if (filePath.startsWith('http://') || filePath.startsWith('https://')) {
-                            url = filePath;
-                        } else {
-                            url = new URL(filePath, window.location.href).href;
-                        }
+                        const url = filePath.startsWith('http') ? filePath :
+                            new URL(filePath, window.location.href).href;
                         const resp = await Utils.fetchWithTimeout(url);
                         if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-                        const text = await resp.text();
-                        this.state.cache.announcement = text;
-                        this.state.flags.announcementLoaded = true;
+                        this.state.cache.announcement = await resp.text();
                     } catch (err) {
                         console.error('加载公告失败:', err);
                         this.state.cache.announcement = '❌ 加载公告失败: ' + err.message;
-                        this.state.flags.announcementLoaded = true;
                         this.dom.btnAnnouncement.style.display = 'none';
                     }
+                    this.state.flags.announcement = true;
                 }
 
-                renderCard(projectKey, versionKey) {
-                    const data = this.state.data;
-                    if (!data) {
-                        this.showStatus('error', '数据未加载，请刷新页面重试');
-                        return;
-                    }
-
-                    const proj = data[projectKey];
-                    if (!proj) {
-                        this.showStatus('error', `未找到项目 "${projectKey}" 的数据`);
-                        return;
-                    }
-
-                    const ver = proj[versionKey];
-                    if (!ver) {
-                        this.showStatus('error', `未找到版本 "${versionKey}" 的数据`);
-                        return;
-                    }
-
-                    const { version, program, sig, enhanced_config } = ver;
-                    if (!version || !program) {
-                        this.showStatus('error', '版本数据不完整: 缺少 version 或 program 字段');
-                        return;
-                    }
-
-                    this.hideStatus();
-                    this.state.cardProject = projectKey;
-                    this.state.cardVersion = versionKey;
-
-                    const displayName = projectKey === 'SCLTK' ? 'SCLTK' : 'SCLTK-Legacy';
-                    const versionLabel = versionKey === 'stable' ? '稳定版' : '预览版';
-                    const versionDisplay = `${versionLabel} ${version}`;
-                    const hasSig = !!sig;
-                    const hasEnhanced = !!enhanced_config;
-                    const enhancedFileName = hasEnhanced ? (enhanced_config.split('/').pop() || '配置文件') : '';
-                    const supportsWrite = !!window.showDirectoryPicker;
-
-                    const actions = [
-                        `<a class="btn btn--primary" href="${program}" download><span aria-hidden="true">📥</span> 下载程序</a>`
-                    ];
-
-                    if (supportsWrite) {
-                        actions.push(
-                            `<button class="btn btn--write" id="btnWriteToFolder"><span aria-hidden="true">💾</span> 浏览器直接写入</button>`
-                        );
-                    }
-
-                    if (hasSig) {
-                        actions.push(`<a class="btn btn--ghost" href="${sig}" download><span aria-hidden="true">🔏</span> 下载签名</a>`);
-                    } else {
-                        actions.push(`<span class="btn btn--secondary btn--disabled"><span aria-hidden="true">🔏</span> 签名文件不可用</span>`);
-                    }
-
-                    actions.push(`<button class="btn btn--ghost" id="btnAlt"><span aria-hidden="true">✨</span> 备用获取方案</button>`);
-
-                    if (hasEnhanced) {
-                        actions.push(
-                            `<button class="btn btn--ghost" id="btnEnhanced" data-path="${enhanced_config}"><span aria-hidden="true">⚙️</span> 查看增强配置 ${Utils.escapeHtml(enhancedFileName)}</button>`
-                        );
-                    }
-
-                    const sigHint = hasSig ? `
-                    <div class="download-card__sig-hint">
-                        <span aria-hidden="true">💡</span>
-                        使用 GPG 签名验证文件完整性，点击左上角「GPG 公钥」查看开发者公钥
-                    </div>
-                ` : '';
-
-                    const writeInfo = supportsWrite ? `
-                    <div class="download-card__write-info">
-                        <span aria-hidden="true">💡</span>
-                        点击「浏览器直接写入」选择文件夹，将自动写入程序${hasSig ? '、签名' : ''}${hasEnhanced ? '、增强配置' : ''}
-                    </div>
-                ` : '';
-
-                    const cardHtml = `
-                    <div class="download-card" role="article">
-                        <div class="download-card__header">
-                            <span class="download-card__name">${displayName}</span>
-                            <span class="download-card__version">${versionDisplay}</span>
-                        </div>
-                        <div class="download-card__actions">
-                            ${actions.join('')}
-                        </div>
-                        ${writeInfo}
-                        ${sigHint}
-                    </div>
-                `;
-
-                    const empty = this.dom.emptyState;
-                    if (empty) empty.remove();
-
-                    const existing = this.dom.cardArea.querySelector('.download-card');
-                    if (existing) {
-                        existing.classList.add('download-card--exit');
-                        setTimeout(() => {
-                            this.dom.cardArea.innerHTML = cardHtml;
-                            this.bindCardButtons();
-                        }, 300);
-                    } else {
-                        this.dom.cardArea.innerHTML = cardHtml;
-                        this.bindCardButtons();
-                    }
-                }
-
-                bindCardButtons() {
-                    const altBtn = document.getElementById('btnAlt');
-                    if (altBtn) altBtn.addEventListener('click', () => this.openAltModal());
-
-                    const enhancedBtn = document.getElementById('btnEnhanced');
-                    if (enhancedBtn) {
-                        enhancedBtn.addEventListener('click', () => {
-                            const path = enhancedBtn.dataset.path;
-                            if (path) this.openEnhancedModal(path);
-                        });
-                    }
-
-                    const writeBtn = document.getElementById('btnWriteToFolder');
-                    if (writeBtn) {
-                        writeBtn.addEventListener('click', () => this.writeToFolder());
-                    }
-                }
-
-                openAltModal() {
-                    const { cardProject, cardVersion, data } = this.state;
-                    if (!cardProject || !cardVersion || !data) return;
-
-                    const proj = data[cardProject];
-                    const ver = proj?.[cardVersion];
-                    if (!ver?.program) return;
-
-                    let url = ver.program;
-                    if (!url.startsWith('http://') && !url.startsWith('https://')) {
-                        url = new URL(url, window.location.href).href;
-                    }
-                    const fileName = url.split('/').pop();
-
-                    const methods = [{
-                        title: 'certutil 下载',
-                        steps: [
-                            '在任意分区的顶级目录下新建一个文件夹（例如 <code>C:\\SCLTK</code>）。',
-                            '点击文件资源管理器的地址栏。',
-                            '执行如下命令：'
-                        ],
-                        code: `certutil -urlcache -split -f "${url}" "${fileName}"`
-                    }, {
-                        title: 'VBScript 下载',
-                        steps: [
-                            '在任意分区的顶级目录下新建一个文件夹（例如 <code>C:\\SCLTK</code>），在文件夹内创建文件 <code>SCLTK.vbs</code>。',
-                            '使用文本编辑器打开 <code>SCLTK.vbs</code>，复制下方代码并保存。',
-                            '运行 <code>SCLTK.vbs</code>。弹出 "OK!" 代表下载完毕。如果失败，可以多运行几次。'
-                        ],
-                        code: `Option Explicit\nDim url, fileName\nurl = "${url}"\nfileName = "${fileName}"\nDim http, stream\nOn Error Resume Next\nSet http = CreateObject("MSXML2.ServerXMLHTTP")\nSet stream = CreateObject("ADODB.Stream")\nhttp.setOption 2, 13056\nhttp.Open "GET", url, False\nhttp.Send\nIf Err.Number <> 0 Then\n    WScript.Echo "[FAILED] Network Error: " & Err.Description\n    WScript.Quit 1\nEnd If\nIf http.Status <> 200 Then\n    WScript.Echo "[FAILED] HTTP Status: " & http.Status\n    WScript.Quit 1\nEnd If\nstream.Type = 1\nstream.Open\nstream.Write http.ResponseBody\nstream.SaveToFile fileName, 2\nstream.Close\nIf Err.Number <> 0 Then\n    WScript.Echo "[FAILED] File Write Error: " & Err.Description\n    WScript.Quit 1\nEnd If\nOn Error GoTo 0\nWScript.Echo "OK!"\nWScript.Quit 0`
-                    }, {
-                        title: 'Python 下载',
-                        steps: [
-                            '在任意分区顶级目录下新建一个文件夹（例如 <code>C:\\SCLTK</code>），在文件夹内创建文件 <code>SCLTK.py</code>。',
-                            '使用文本编辑器打开 <code>SCLTK.py</code>，复制下方代码并保存。',
-                            '使用 Python 3 运行 <code>SCLTK.py</code>。输出 "OK!" 代表下载完毕。如果失败，可以多运行几次。'
-                        ],
-                        code: `import urllib.request\nimport ssl\nimport sys\ndef download_file_ignore_ssl(url, file_path):\n    context = ssl.create_default_context()\n    context.check_hostname = False\n    context.verify_mode = ssl.CERT_NONE\n    try:\n        with urllib.request.urlopen(url, context=context) as response:\n            if response.status == 200:\n                with open(file_path, 'wb') as f:\n                    while True:\n                        chunk = response.read(8192)\n                        if not chunk:\n                            break\n                        f.write(chunk)\n                return True\n            else:\n                print(f"[FAILED] HTTP Status: {response.status}")\n                return False\n    except Exception as e:\n        print(f"[FAILED] {e}")\n        return False\ndef main():\n    print("Downloading...")\n    url = "${url}"\n    filename = "${fileName}"\n    print(f"Downloading: {filename}...")\n    if not download_file_ignore_ssl(url, filename):\n        sys.exit(1)\n    print("OK!")\n    sys.exit(0)\nif __name__ == "__main__":\n    main()`
-                    }, {
-                        title: 'C++ 下载',
-                        steps: [
-                            '在任意盘符顶级目录下新建一个文件夹（例如 <code>C:\\SCLTK</code>），在文件夹内创建文件 <code>SCLTK.cpp</code>。',
-                            '使用 Dev-C++ 打开 <code>SCLTK.cpp</code>，复制下方代码并保存。',
-                            '编译并运行。输出 "Download successful!" 代表下载完毕。如果失败，可以多运行几次。'
-                        ],
-                        code: `#include <windows.h>\n#include <iostream>\ntypedef HRESULT( WINAPI *URLDownloadToFileW_t )( LPUNKNOWN, LPCWSTR, LPCWSTR, DWORD, LPBINDSTATUSCALLBACK );\nint main()\n{\n    HMODULE hUrlMon = LoadLibraryW( L"urlmon.dll" );\n    if ( hUrlMon == NULL ) {\n        std::cerr << "Failed to load urlmon.dll" << std::endl;\n        return -1;\n    }\n    URLDownloadToFileW_t URLDownloadToFileW = ( URLDownloadToFileW_t ) GetProcAddress( hUrlMon, "URLDownloadToFileW" );\n    if ( URLDownloadToFileW == NULL ) {\n        std::cerr << "Failed to get address of URLDownloadToFileW" << std::endl;\n        FreeLibrary( hUrlMon );\n        return -1;\n    }\n    LPCWSTR url      = L"${url}";\n    LPCWSTR filePath = L"${fileName}";\n    HRESULT hr       = URLDownloadToFileW( NULL, url, filePath, 0, NULL );\n    if ( SUCCEEDED( hr ) ) {\n        std::cout << "Download successful!" << std::endl;\n    } else {\n        std::cerr << "Download failed with HRESULT: 0x" << std::hex << hr << std::endl;\n    }\n    FreeLibrary( hUrlMon );\n    return 0;\n}`
-                    }];
-
-                    const html = methods.map((m, idx) => {
-                        const stepsHtml = '<ol>' + m.steps.map(s => `<li>${s}</li>`).join('') + '</ol>';
-                        const escaped = Utils.escapeHtml(m.code);
-                        return `
-                        <div class="method">
-                            <div class="method__title">${m.title}</div>
-                            <div class="method__steps">${stepsHtml}</div>
-                            <div class="code-block">
-                                <button class="code-block__copy" data-target="code-${idx}">复制</button>
-                                <pre id="code-${idx}"><code>${escaped}</code></pre>
-                            </div>
-                        </div>
-                    `;
-                    }).join('');
-
-                    this.modalManager.open('Alt', (body) => {
-                        body.innerHTML = html;
-                        body.querySelectorAll('.code-block__copy').forEach(btn => {
-                            btn.addEventListener('click', () => ClipboardManager.copyFromElement(btn, btn.dataset
-                                .target));
-                        });
-                    });
-                }
-
-                openEnhancedModal(path) {
-                    const fileName = path.split('/').pop() || '增强配置';
-                    const titleEl = document.getElementById('modalEnhancedTitle');
-                    if (titleEl) titleEl.textContent = `⚙️ 增强配置 — ${fileName}`;
-
-                    this.modalManager.open('Enhanced', async (body) => {
-                        body.innerHTML = '<span class="loading-text">⏳ 加载中…</span>';
-                        try {
-                            const resp = await Utils.fetchWithTimeout(path);
-                            if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-                            const text = await resp.text();
-                            const escaped = Utils.escapeHtml(text);
-                            body.innerHTML = `
-                            <div class="code-block">
-                                <button class="code-block__copy" data-target="enhanced-pre">复制</button>
-                                <pre id="enhanced-pre"><code>${escaped}</code></pre>
-                            </div>
-                        `;
-                            const copyBtn = body.querySelector('.code-block__copy');
-                            if (copyBtn) {
-                                copyBtn.addEventListener('click', () => ClipboardManager.copyFromElement(copyBtn,
-                                    'enhanced-pre'));
-                            }
-                        } catch (err) {
-                            body.innerHTML =
-                                `<div class="code-block"><pre style="color: var(--text-secondary);">❌ 加载失败: ${Utils.escapeHtml(err.message)}</pre></div>`;
-                        }
-                    });
-                }
-
-                showStatus(type, msg) {
+                _showStatus(type, msg) {
                     const el = this.dom.status;
                     el.className = 'status';
-                    el.textContent = msg;
+                    el.textContent = msg || '';
                     el.style.display = msg ? 'block' : 'none';
-
                     if (type === 'error') {
                         el.classList.add('status--error');
                         this.dom.confirm.disabled = true;
@@ -1942,156 +1717,425 @@
                     }
                 }
 
-                hideStatus() {
-                    this.dom.status.style.display = 'none';
-                    this.dom.status.className = 'status';
+                _hideStatus() {
+                    const el = this.dom.status;
+                    el.style.display = 'none';
+                    el.className = 'status';
                     this.dom.confirm.disabled = false;
                 }
 
-                handleConfirm() {
-                    if (!this.state.dataLoaded) {
-                        this.showStatus('error', '⏳ 数据加载中，请稍候…');
+                _handleConfirm() {
+                    if (!this.state.loaded) {
+                        this._showStatus('error', '⏳ 数据加载中，请稍候…');
                         return;
                     }
                     const { project, version, data } = this.state;
                     if (!data) {
-                        this.showStatus('error', '❌ 数据加载失败，请刷新页面');
+                        this._showStatus('error', '❌ 数据加载失败，请刷新页面');
                         return;
                     }
                     if (!data[project]) {
-                        this.showStatus('error', `项目 "${project}" 不存在`);
+                        this._showStatus('error', `项目 "${project}" 不存在`);
                         return;
                     }
                     if (!data[project][version]) {
-                        this.showStatus('error', `版本 "${version}" 不存在于 "${project}" 中`);
+                        this._showStatus('error', `版本 "${version}" 不存在于 "${project}" 中`);
                         return;
                     }
-                    this.renderCard(project, version);
+                    this._renderCard(project, version);
                 }
 
-                async writeToFolder() {
-                    if (this.state.writeInProgress) return;
+                _renderCard(projectKey, versionKey) {
+                    const data = this.state.data;
+                    if (!data) return;
+
+                    const proj = data[projectKey];
+                    const ver = proj?.[versionKey];
+                    if (!ver?.version || !ver?.program) {
+                        this._showStatus('error', '版本数据不完整: 缺少 version 或 program 字段');
+                        return;
+                    }
+
+                    this._hideStatus();
+                    this.state.cardProject = projectKey;
+                    this.state.cardVersion = versionKey;
+
+                    const displayName = projectKey === 'SCLTK' ? 'SCLTK' : 'SCLTK-Legacy';
+                    const versionLabel = versionKey === 'stable' ? '稳定版' : '预览版';
+                    const versionDisplay = `${versionLabel} ${ver.version}`;
+                    const hasSig = !!ver.sig;
+                    const hasEnhanced = !!ver.enhanced_config;
+                    const enhancedFileName = hasEnhanced ? (ver.enhanced_config.split('/').pop() || '配置文件') : '';
+                    const supportsWrite = !!window.showDirectoryPicker;
+
+                    const actions = [
+                        `<a class="btn btn--primary" href="${ver.program}" download><span aria-hidden="true">📥</span> 下载程序</a>`
+                    ];
+
+                    if (supportsWrite) {
+                        actions.push(
+                            `<button class="btn btn--write" id="btnWriteToFolder"><span aria-hidden="true">💾</span> 浏览器直接写入</button>`
+                        );
+                    }
+
+                    if (hasSig) {
+                        actions.push(
+                            `<a class="btn btn--ghost" href="${ver.sig}" download><span aria-hidden="true">🔏</span> 下载签名</a>`
+                        );
+                    } else {
+                        actions.push(
+                            `<span class="btn btn--secondary btn--disabled"><span aria-hidden="true">🔏</span> 签名文件不可用</span>`
+                        );
+                    }
+
+                    actions.push(
+                        `<button class="btn btn--ghost" id="btnAlt"><span aria-hidden="true">✨</span> 备用获取方案</button>`
+                    );
+
+                    if (hasEnhanced) {
+                        actions.push(
+                            `<button class="btn btn--ghost" id="btnEnhanced" data-path="${ver.enhanced_config}"><span aria-hidden="true">⚙️</span> 查看增强配置 ${Utils.escapeHtml(enhancedFileName)}</button>`
+                        );
+                    }
+
+                    const sigHint = hasSig ?
+                        `<div class="download-card__sig-hint"><span aria-hidden="true">💡</span> 使用 GPG 签名验证文件完整性，点击左上角「GPG 公钥」查看开发者公钥</div>` :
+                        '';
+
+                    const writeInfo = supportsWrite ?
+                        `<div class="download-card__write-info"><span aria-hidden="true">💡</span> 点击「浏览器直接写入」选择文件夹，将自动写入程序${hasSig ? '、签名' : ''}${hasEnhanced ? '、增强配置' : ''}</div>` :
+                        '';
+
+                    const cardHtml = `
+                    <div class="download-card" role="article">
+                        <div class="download-card__header">
+                            <span class="download-card__name">${displayName}</span>
+                            <span class="download-card__version">${versionDisplay}</span>
+                        </div>
+                        <div class="download-card__actions">${actions.join('')}</div>
+                        ${writeInfo}
+                        ${sigHint}
+                    </div>`;
+
+                    const empty = this.dom.emptyState;
+                    if (empty) empty.remove();
+
+                    const existing = this.dom.cardArea.querySelector('.download-card');
+                    if (existing) {
+                        existing.classList.add('download-card--exit');
+                        setTimeout(() => {
+                            this.dom.cardArea.innerHTML = cardHtml;
+                            this._bindCardButtons();
+                        }, 300);
+                    } else {
+                        this.dom.cardArea.innerHTML = cardHtml;
+                        this._bindCardButtons();
+                    }
+                }
+
+                _bindCardButtons() {
+                    const alt = document.getElementById('btnAlt');
+                    if (alt) alt.addEventListener('click', () => this._openAltModal());
+
+                    const enhanced = document.getElementById('btnEnhanced');
+                    if (enhanced) {
+                        enhanced.addEventListener('click', () => {
+                            const path = enhanced.dataset.path;
+                            if (path) this._openEnhancedModal(path);
+                        });
+                    }
+
+                    const write = document.getElementById('btnWriteToFolder');
+                    if (write) write.addEventListener('click', () => this._writeToFolder());
+                }
+
+                _openAltModal() {
+                    const { cardProject, cardVersion, data } = this.state;
+                    if (!cardProject || !cardVersion || !data) return;
+                    const ver = data[cardProject]?.[cardVersion];
+                    if (!ver?.program) return;
+
+                    const url = ver.program.startsWith('http') ? ver.program :
+                        new URL(ver.program, window.location.href).href;
+                    const fileName = Utils.getFileNameFromUrl(url);
+
+                    const methods = [{
+                        id: 'base64',
+                        title: 'Base64 解析（推荐）',
+                        steps: [
+                            '在任意盘符顶级目录下新建一个文件夹（例如 <code>C:\\SCLTK</code>），在文件夹内创建文件 <code>SCLTK.txt</code>。',
+                            '打开 <code>SCLTK.txt</code>，复制下方 “代码块 A” 中的内容并保存。不要添加任何多余字符，包括注释、换行、空格等。',
+                            '点击文件资源管理器的地址栏，复制并执行下方 “代码块 B-1” 或 “代码块 B-2” 中的命令。'
+                        ],
+                        isBase64: true,
+                        fileName,
+                        url
+                    }, {
+                        id: 'certutil',
+                        title: 'certutil 下载（推荐）',
+                        steps: [
+                            '在任意分区的顶级目录下新建一个文件夹（例如 <code>C:\\SCLTK</code>）。',
+                            '点击文件资源管理器的地址栏，复制并执行如下命令：'
+                        ],
+                        code: `certutil -urlcache -split -f "${url}" "${fileName}"`
+                    }, {
+                        id: 'vbscript',
+                        title: 'VBScript 下载',
+                        steps: [
+                            '在任意分区的顶级目录下新建一个文件夹（例如 <code>C:\\SCLTK</code>），在文件夹内创建文件 <code>SCLTK.vbs</code>。',
+                            '使用文本编辑器打开 <code>SCLTK.vbs</code>，复制下方代码并保存。',
+                            '运行 <code>SCLTK.vbs</code>。弹出 “OK!” 代表下载完毕。如果失败，可以多运行几次。'
+                        ],
+                        code: `Option Explicit\nDim url, fileName\nurl = "${url}"\nfileName = "${fileName}"\nDim http, stream\nOn Error Resume Next\nSet http = CreateObject("MSXML2.ServerXMLHTTP")\nSet stream = CreateObject("ADODB.Stream")\nhttp.setOption 2, 13056\nhttp.Open "GET", url, False\nhttp.Send\nIf Err.Number <> 0 Then\n    WScript.Echo "[FAILED] Network Error: " & Err.Description\n    WScript.Quit 1\nEnd If\nIf http.Status <> 200 Then\n    WScript.Echo "[FAILED] HTTP Status: " & http.Status\n    WScript.Quit 1\nEnd If\nstream.Type = 1\nstream.Open\nstream.Write http.ResponseBody\nstream.SaveToFile fileName, 2\nstream.Close\nIf Err.Number <> 0 Then\n    WScript.Echo "[FAILED] File Write Error: " & Err.Description\n    WScript.Quit 1\nEnd If\nOn Error GoTo 0\nWScript.Echo “OK!”\nWScript.Quit 0`
+                    }, {
+                        id: 'python',
+                        title: 'Python 下载',
+                        steps: [
+                            '在任意分区顶级目录下新建一个文件夹（例如 <code>C:\\SCLTK</code>），在文件夹内创建文件 <code>SCLTK.py</code>。',
+                            '使用文本编辑器打开 <code>SCLTK.py</code>，复制下方代码并保存。',
+                            '使用 Python 3 运行 <code>SCLTK.py</code>。输出 <code>OK!</code> 代表下载完毕。如果失败，可以多运行几次。'
+                        ],
+                        code: `import urllib.request\nimport ssl\nimport sys\ndef download_file_ignore_ssl(url, file_path):\n    context = ssl.create_default_context()\n    context.check_hostname = False\n    context.verify_mode = ssl.CERT_NONE\n    try:\n        with urllib.request.urlopen(url, context=context) as response:\n            if response.status == 200:\n                with open(file_path, 'wb') as f:\n                    while True:\n                        chunk = response.read(8192)\n                        if not chunk:\n                            break\n                        f.write(chunk)\n                return True\n            else:\n                print(f"[FAILED] HTTP Status: {response.status}")\n                return False\n    except Exception as e:\n        print(f"[FAILED] {e}")\n        return False\ndef main():\n    print("Downloading...")\n    url = "${url}"\n    filename = "${fileName}"\n    print(f"Downloading: {filename}...")\n    if not download_file_ignore_ssl(url, filename):\n        sys.exit(1)\n    print(“OK!”)\n    sys.exit(0)\nif __name__ == "__main__":\n    main()`
+                    }, {
+                        id: 'cpp',
+                        title: 'C++ 下载',
+                        steps: [
+                            '在任意盘符顶级目录下新建一个文件夹（例如 <code>C:\\SCLTK</code>），在文件夹内创建文件 <code>SCLTK.cpp</code>。',
+                            '使用 Dev-C++ 打开 <code>SCLTK.cpp</code>，复制下方代码并保存。',
+                            '编译并运行。输出 <code>Download successful!</code> 代表下载完毕。如果失败，可以多运行几次。'
+                        ],
+                        code: `#include <windows.h>\n#include <iostream>\ntypedef HRESULT( WINAPI *URLDownloadToFileW_t )( LPUNKNOWN, LPCWSTR, LPCWSTR, DWORD, LPBINDSTATUSCALLBACK );\nint main()\n{\n    HMODULE hUrlMon = LoadLibraryW( L"urlmon.dll" );\n    if ( hUrlMon == NULL ) {\n        std::cerr << "Failed to load urlmon.dll" << std::endl;\n        return -1;\n    }\n    URLDownloadToFileW_t URLDownloadToFileW = ( URLDownloadToFileW_t ) GetProcAddress( hUrlMon, "URLDownloadToFileW" );\n    if ( URLDownloadToFileW == NULL ) {\n        std::cerr << "Failed to get address of URLDownloadToFileW" << std::endl;\n        FreeLibrary( hUrlMon );\n        return -1;\n    }\n    LPCWSTR url      = L"${url}";\n    LPCWSTR filePath = L"${fileName}";\n    HRESULT hr       = URLDownloadToFileW( NULL, url, filePath, 0, NULL );\n    if ( SUCCEEDED( hr ) ) {\n        std::cout << "Download successful!" << std::endl;\n    } else {\n        std::cerr << "Download failed with HRESULT: 0x" << std::hex << hr << std::endl;\n    }\n    FreeLibrary( hUrlMon );\n    return 0;\n}`
+                    }];
+
+                    let html = '';
+                    for (const m of methods) {
+                        html += m.isBase64 ? this._renderBase64Method(m) : this._renderNormalMethod(m);
+                    }
+
+                    this.modal.open('Alt', (body) => {
+                        body.innerHTML = html;
+                        this._bindBase64Events(body, url, fileName);
+                        body.querySelectorAll('.code-block__copy:not(.code-block__copy--base64)').forEach(btn => {
+                            btn.addEventListener('click', () =>
+                                Clipboard.copyFromElement(btn, btn.dataset.target));
+                        });
+                    });
+                }
+
+                _renderNormalMethod(m) {
+                    const steps = '<ol>' + m.steps.map(s => `<li>${s}</li>`).join('') + '</ol>';
+                    const escaped = Utils.escapeHtml(m.code);
+                    return `
+                        <div class="method">
+                            <div class="method__title">${m.title}</div>
+                            <div class="method__steps">${steps}</div>
+                            <div class="code-block">
+                                <button class="code-block__copy" data-target="code-${m.id}">复制</button>
+                                <pre id="code-${m.id}"><code>${escaped}</code></pre>
+                            </div>
+                        </div>`;
+                }
+
+                _renderBase64Method(m) {
+                    const steps = '<ol>' + m.steps.map(s => `<li>${s}</li>`).join('') + '</ol>';
+                    const psCmd = `powershell -ExecutionPolicy Bypass -Command "[IO.File]::WriteAllBytes('${m.fileName}', [Convert]::FromBase64String([IO.File]::ReadAllText('SCLTK.txt').Trim()))"`;
+                    const certCmd = `certutil -decode SCLTK.txt ${m.fileName}`;
+                    return `
+                        <div class="method" id="base64Method">
+                            <div class="method__title">${m.title}</div>
+                            <div class="method__steps">${steps}</div>
+                            <div class="code-block" id="base64Block">
+                                <div class="code-block-label">代码块 A</div>
+                                <div id="base64Placeholder" style="padding:12px 18px;display:flex;justify-content:center;align-items:center;min-height:60px;">
+                                    <button class="base64-btn" id="btnComputeBase64">点击此按钮以计算 Base64 字符串，这可能需要一些时间</button>
+                                </div>
+                                <div id="base64Result" style="display:none;padding:6px 18px 14px 18px;">
+                                    <div class="base64-status-msg" id="base64StatusMsg"></div>
+                                    <div class="base64-result-area"><pre id="base64Content"></pre></div>
+                                    <div style="margin-top:8px;"><button class="code-block__copy code-block__copy--base64" id="base64CopyBtn" data-target="base64Content">复制</button></div>
+                                </div>
+                            </div>
+                            <div class="code-block">
+                                <div class="code-block-label">代码块 B-1</div>
+                                <button class="code-block__copy" data-target="code-base64-ps">复制</button>
+                                <pre id="code-base64-ps"><code>${Utils.escapeHtml(psCmd)}</code></pre>
+                            </div>
+                            <div class="code-block">
+                                <div class="code-block-label">代码块 B-2</div>
+                                <button class="code-block__copy" data-target="code-base64-cert">复制</button>
+                                <pre id="code-base64-cert"><code>${Utils.escapeHtml(certCmd)}</code></pre>
+                            </div>
+                        </div>`;
+                }
+
+                _bindBase64Events(body, url, fileName) {
+                    const btn = body.querySelector('#btnComputeBase64');
+                    if (!btn) return;
+
+                    const placeholder = body.querySelector('#base64Placeholder');
+                    const resultDiv = body.querySelector('#base64Result');
+                    const contentPre = body.querySelector('#base64Content');
+                    const statusMsg = body.querySelector('#base64StatusMsg');
+                    const copyBtn = body.querySelector('#base64CopyBtn');
+
+                    const compute = async () => {
+                        btn.disabled = true;
+                        btn.innerHTML = '<span class="spinner-small"></span> 计算中…';
+                        try {
+                            const resp = await Utils.fetchWithTimeout(url, {}, 60000);
+                            if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                            const blob = await resp.blob();
+                            const base64 = await new Promise((resolve, reject) => {
+                                const reader = new FileReader();
+                                reader.onload = () => {
+                                    const dataUrl = reader.result;
+                                    resolve(dataUrl.substring(dataUrl.indexOf(',') + 1));
+                                };
+                                reader.onerror = () => reject(reader.error);
+                                reader.readAsDataURL(blob);
+                            });
+
+                            placeholder.style.display = 'none';
+                            resultDiv.style.display = 'block';
+                            contentPre.textContent = base64;
+                            statusMsg.textContent = '✅ 计算完成';
+                            statusMsg.className = 'base64-status-msg base64-status-msg--success';
+
+                            if (copyBtn) {
+                                copyBtn.addEventListener('click', () =>
+                                    Clipboard.copyFromElement(copyBtn, 'base64Content'));
+                            }
+                        } catch (err) {
+                            statusMsg.textContent = '❌ 计算失败: ' + err.message;
+                            statusMsg.className = 'base64-status-msg base64-status-msg--error';
+                            btn.disabled = false;
+                            btn.innerHTML = '点击此按钮以计算 Base64 字符串，这可能需要一些时间';
+                        }
+                    };
+
+                    btn.addEventListener('click', compute);
+                    if (copyBtn) {
+                        copyBtn.addEventListener('click', () => Clipboard.copyFromElement(copyBtn, 'base64Content'));
+                    }
+                }
+
+                _openEnhancedModal(path) {
+                    const fileName = path.split('/').pop() || '增强配置';
+                    const titleEl = document.getElementById('modalEnhancedTitle');
+                    if (titleEl) titleEl.textContent = `⚙️ 增强配置 — ${fileName}`;
+
+                    this.modal.open('Enhanced', async (body) => {
+                        body.innerHTML = '<span class="loading-text">⏳ 加载中…</span>';
+                        try {
+                            const resp = await Utils.fetchWithTimeout(path);
+                            if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                            const text = await resp.text();
+                            body.innerHTML = `
+                            <div class="code-block">
+                                <button class="code-block__copy" data-target="enhanced-pre">复制</button>
+                                <pre id="enhanced-pre"><code>${Utils.escapeHtml(text)}</code></pre>
+                            </div>`;
+                            const copyBtn = body.querySelector('.code-block__copy');
+                            if (copyBtn) {
+                                copyBtn.addEventListener('click', () =>
+                                    Clipboard.copyFromElement(copyBtn, 'enhanced-pre'));
+                            }
+                        } catch (err) {
+                            body.innerHTML =
+                                `<div class="code-block"><pre style="color:var(--text-secondary);">❌ 加载失败: ${Utils.escapeHtml(err.message)}</pre></div>`;
+                        }
+                    });
+                }
+
+                async _writeToFolder() {
+                    if (this.state.writing) return;
 
                     const { cardProject, cardVersion, data } = this.state;
                     if (!cardProject || !cardVersion || !data) {
-                        this.showStatus('error', '请先选择版本并点击「确定」');
+                        this._showStatus('error', '请先选择版本并点击「确定」');
                         return;
                     }
-
-                    const proj = data[cardProject];
-                    const ver = proj?.[cardVersion];
+                    const ver = data[cardProject]?.[cardVersion];
                     if (!ver) {
-                        this.showStatus('error', '版本数据无效');
+                        this._showStatus('error', '版本数据无效');
                         return;
                     }
-
                     if (!window.showDirectoryPicker) {
-                        this.showStatus('error', '❌ 您的浏览器不支持文件系统访问 API，请使用最新版 Chrome/Edge');
+                        this._showStatus('error', '❌ 您的浏览器不支持文件系统访问 API，请使用最新版 Chrome/Edge');
                         return;
                     }
 
-                    const fileList = [];
-                    const programUrl = new URL(ver.program, window.location.href).href;
-                    fileList.push({
-                        url: programUrl,
-                        fileName: Utils.getFileNameFromUrl(programUrl),
-                        type: '程序文件'
-                    });
+                    const files = [];
+                    const progUrl = new URL(ver.program, window.location.href).href;
+                    files.push({ url: progUrl, fileName: Utils.getFileNameFromUrl(progUrl), type: '程序文件' });
 
                     if (ver.sig) {
                         const sigUrl = new URL(ver.sig, window.location.href).href;
-                        fileList.push({
-                            url: sigUrl,
-                            fileName: Utils.getFileNameFromUrl(sigUrl),
-                            type: '签名文件'
-                        });
+                        files.push({ url: sigUrl, fileName: Utils.getFileNameFromUrl(sigUrl), type: '签名文件' });
                     }
-
                     if (ver.enhanced_config) {
-                        const enhancedUrl = new URL(ver.enhanced_config, window.location.href).href;
-                        fileList.push({
-                            url: enhancedUrl,
-                            fileName: Utils.getFileNameFromUrl(enhancedUrl),
-                            type: '增强配置'
-                        });
+                        const enhUrl = new URL(ver.enhanced_config, window.location.href).href;
+                        files.push({ url: enhUrl, fileName: Utils.getFileNameFromUrl(enhUrl), type: '增强配置' });
                     }
 
-                    this.showStatus('loading', '📂 请选择一个目标文件夹…');
+                    this._showStatus('loading', '📂 请选择一个目标文件夹…');
 
                     let dirHandle;
                     try {
                         dirHandle = await window.showDirectoryPicker();
                     } catch (err) {
                         if (err.name === 'AbortError' || err.message?.includes('abort')) {
-                            this.showStatus('error', '⏹️ 已取消选择文件夹');
-                            setTimeout(() => this.hideStatus(), 3000);
+                            this._showStatus('error', '⏹️ 已取消选择文件夹');
+                            setTimeout(() => this._hideStatus(), 3000);
                         } else {
-                            this.showStatus('error', '❌ 选择文件夹失败: ' + err.message);
+                            this._showStatus('error', '❌ 选择文件夹失败: ' + err.message);
                         }
                         return;
                     }
 
-                    this.state.writeInProgress = true;
+                    this.state.writing = true;
                     const writeBtn = document.getElementById('btnWriteToFolder');
                     if (writeBtn) {
                         writeBtn.disabled = true;
                         writeBtn.innerHTML = '<span class="spinner"></span> 写入中…';
                     }
 
-                    this.showStatus('loading', '⏳ 正在下载并写入文件…');
+                    this._showStatus('loading', '⏳ 正在下载并写入文件…');
 
                     const results = [];
-                    let allSuccess = true;
+                    let allOk = true;
 
-                    for (const file of fileList) {
+                    for (const f of files) {
                         try {
-                            const resp = await Utils.fetchWithTimeout(file.url, {}, 30000);
+                            const resp = await Utils.fetchWithTimeout(f.url, {}, 30000);
                             if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-
-                            const contentLength = resp.headers.get('content-length');
-                            const size = contentLength ? parseInt(contentLength, 10) : null;
                             const blob = await resp.blob();
-
-                            const fileHandle = await dirHandle.getFileHandle(file.fileName, { create: true });
-                            const writable = await fileHandle.createWritable();
+                            const handle = await dirHandle.getFileHandle(f.fileName, { create: true });
+                            const writable = await handle.createWritable();
                             await writable.write(blob);
                             await writable.close();
-
-                            results.push({
-                                ...file,
-                                size: blob.size,
-                                success: true
-                            });
+                            results.push({ ...f, size: blob.size, ok: true });
                         } catch (err) {
-                            results.push({
-                                ...file,
-                                error: err.message,
-                                success: false
-                            });
-                            allSuccess = false;
+                            results.push({ ...f, error: err.message, ok: false });
+                            allOk = false;
                             break;
                         }
                     }
 
-                    this.state.writeInProgress = false;
+                    this.state.writing = false;
                     if (writeBtn) {
                         writeBtn.disabled = false;
                         writeBtn.innerHTML = '<span aria-hidden="true">💾</span> 浏览器直接写入';
                     }
 
-                    if (allSuccess) {
-                        const totalSize = results.reduce((sum, r) => sum + (r.size || 0), 0);
-                        const sizeStr = Utils.formatFileSize(totalSize);
-                        const fileNames = results.map(r => `「${r.fileName}」`).join('、');
-                        this.showStatus('success', `✅ 已成功写入 ${fileNames}（共 ${sizeStr}）到您选择的文件夹`);
-                        setTimeout(() => this.hideStatus(), 6000);
+                    if (allOk) {
+                        const total = results.reduce((s, r) => s + (r.size || 0), 0);
+                        const names = results.map(r => `「${r.fileName}」`).join('、');
+                        this._showStatus('success', `✅ 已成功写入 ${names}（共 ${Utils.formatFileSize(total)}）到您选择的文件夹`);
+                        setTimeout(() => this._hideStatus(), 6000);
                     } else {
-                        const failed = results.find(r => !r.success);
-                        if (failed) {
-                            this.showStatus('error', `❌ 写入失败: ${failed.fileName} — ${failed.error}`);
-                        } else {
-                            this.showStatus('error', '❌ 写入过程中发生未知错误');
-                        }
+                        const failed = results.find(r => !r.ok);
+                        this._showStatus('error', `❌ 写入失败: ${failed?.fileName || '未知'} — ${failed?.error || '未知错误'}`);
                     }
                 }
             }
@@ -2099,6 +2143,7 @@
             document.addEventListener('DOMContentLoaded', () => {
                 new SCLTKApp();
             });
+
         })();
     </script>
 
