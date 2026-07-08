@@ -112,6 +112,7 @@
             max-width: 1000px;
             margin: 0 auto;
             padding: 0 12px;
+            flex: 1 0 auto;
         }
 
         .toolbar {
@@ -953,6 +954,30 @@
             font-style: italic;
         }
 
+        .site-footer {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 14px 24px 28px;
+            text-align: center;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            border: none;
+            flex-shrink: 0;
+        }
+
+        .site-footer a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color var(--transition-fast);
+        }
+
+        .site-footer a:hover {
+            text-decoration: underline;
+            color: var(--accent-hover);
+        }
+
         ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
@@ -1053,6 +1078,11 @@
             .toolbar__btn {
                 padding: 6px 12px;
             }
+
+            .site-footer {
+                padding: 12px 16px 24px;
+                font-size: 0.85rem;
+            }
         }
 
         @media (max-width: 400px) {
@@ -1069,6 +1099,11 @@
             .raw-content {
                 font-size: 0.65rem;
                 padding: 10px 12px;
+            }
+
+            .site-footer {
+                padding: 10px 12px 20px;
+                font-size: 0.8rem;
             }
         }
     </style>
@@ -1150,6 +1185,16 @@
         </section>
 
     </div>
+
+    <footer class="site-footer">
+        <p>
+            构建自
+            <a href="https://github.com/MaxLHy0424/SCLTK-Website" target="_blank" rel="noopener">SCLTK-Website</a>
+            &amp;
+            <a href="https://github.com/MaxLHy0424/SCLTK-Website-Template" target="_blank"
+                rel="noopener">SCLTK-Website-Template</a>
+        </p>
+    </footer>
 
     <div id="modalContainer"></div>
 
@@ -1884,9 +1929,9 @@
                         steps: [
                             '在任意分区的顶级目录下新建一个文件夹（例如 <code>C:\\SCLTK</code>），在文件夹内创建文件 <code>SCLTK.vbs</code>。',
                             '使用文本编辑器打开 <code>SCLTK.vbs</code>，复制下方代码并保存。',
-                            '运行 <code>SCLTK.vbs</code>。弹出 “OK!” 代表下载完毕。如果失败，可以多运行几次。'
+                            '运行 <code>SCLTK.vbs</code>。弹出 "OK!" 代表下载完毕。如果失败，可以多运行几次。'
                         ],
-                        code: `Option Explicit\nDim url, fileName\nurl = "${url}"\nfileName = "${fileName}"\nDim http, stream\nOn Error Resume Next\nSet http = CreateObject("MSXML2.ServerXMLHTTP")\nSet stream = CreateObject("ADODB.Stream")\nhttp.setOption 2, 13056\nhttp.Open "GET", url, False\nhttp.Send\nIf Err.Number <> 0 Then\n    WScript.Echo "[FAILED] Network Error: " & Err.Description\n    WScript.Quit 1\nEnd If\nIf http.Status <> 200 Then\n    WScript.Echo "[FAILED] HTTP Status: " & http.Status\n    WScript.Quit 1\nEnd If\nstream.Type = 1\nstream.Open\nstream.Write http.ResponseBody\nstream.SaveToFile fileName, 2\nstream.Close\nIf Err.Number <> 0 Then\n    WScript.Echo "[FAILED] File Write Error: " & Err.Description\n    WScript.Quit 1\nEnd If\nOn Error GoTo 0\nWScript.Echo “OK!”\nWScript.Quit 0`
+                        code: `Option Explicit\nDim url, fileName\nurl = "${url}"\nfileName = "${fileName}"\nDim http, stream\nOn Error Resume Next\nSet http = CreateObject("MSXML2.ServerXMLHTTP")\nSet stream = CreateObject("ADODB.Stream")\nhttp.setOption 2, 13056\nhttp.Open "GET", url, False\nhttp.Send\nIf Err.Number <> 0 Then\n    WScript.Echo "[FAILED] Network Error: " & Err.Description\n    WScript.Quit 1\nEnd If\nIf http.Status <> 200 Then\n    WScript.Echo "[FAILED] HTTP Status: " & http.Status\n    WScript.Quit 1\nEnd If\nstream.Type = 1\nstream.Open\nstream.Write http.ResponseBody\nstream.SaveToFile fileName, 2\nstream.Close\nIf Err.Number <> 0 Then\n    WScript.Echo "[FAILED] File Write Error: " & Err.Description\n    WScript.Quit 1\nEnd If\nOn Error GoTo 0\nWScript.Echo "OK!"\nWScript.Quit 0`
                     }, {
                         id: 'python',
                         title: 'Python 下载',
@@ -1895,7 +1940,7 @@
                             '使用文本编辑器打开 <code>SCLTK.py</code>，复制下方代码并保存。',
                             '使用 Python 3 运行 <code>SCLTK.py</code>。输出 <code>OK!</code> 代表下载完毕。如果失败，可以多运行几次。'
                         ],
-                        code: `import urllib.request\nimport ssl\nimport sys\ndef download_file_ignore_ssl(url, file_path):\n    context = ssl.create_default_context()\n    context.check_hostname = False\n    context.verify_mode = ssl.CERT_NONE\n    try:\n        with urllib.request.urlopen(url, context=context) as response:\n            if response.status == 200:\n                with open(file_path, 'wb') as f:\n                    while True:\n                        chunk = response.read(8192)\n                        if not chunk:\n                            break\n                        f.write(chunk)\n                return True\n            else:\n                print(f"[FAILED] HTTP Status: {response.status}")\n                return False\n    except Exception as e:\n        print(f"[FAILED] {e}")\n        return False\ndef main():\n    print("Downloading...")\n    url = "${url}"\n    filename = "${fileName}"\n    print(f"Downloading: {filename}...")\n    if not download_file_ignore_ssl(url, filename):\n        sys.exit(1)\n    print(“OK!”)\n    sys.exit(0)\nif __name__ == "__main__":\n    main()`
+                        code: `import urllib.request\nimport ssl\nimport sys\ndef download_file_ignore_ssl(url, file_path):\n    context = ssl.create_default_context()\n    context.check_hostname = False\n    context.verify_mode = ssl.CERT_NONE\n    try:\n        with urllib.request.urlopen(url, context=context) as response:\n            if response.status == 200:\n                with open(file_path, 'wb') as f:\n                    while True:\n                        chunk = response.read(8192)\n                        if not chunk:\n                            break\n                        f.write(chunk)\n                return True\n            else:\n                print(f"[FAILED] HTTP Status: {response.status}")\n                return False\n    except Exception as e:\n        print(f"[FAILED] {e}")\n        return False\ndef main():\n    print("Downloading...")\n    url = "${url}"\n    filename = "${fileName}"\n    print(f"Downloading: {filename}...")\n    if not download_file_ignore_ssl(url, filename):\n        sys.exit(1)\n    print("OK!")\n    sys.exit(0)\nif __name__ == "__main__":\n    main()`
                     }, {
                         id: 'cpp',
                         title: 'C++ 下载',
