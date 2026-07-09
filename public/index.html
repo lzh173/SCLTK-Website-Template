@@ -6,7 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="light dark" />
     <meta name="description" content="SCLTK & SCLTK-Legacy 官方下载站" />
-    <title>SCLTK &amp; SCLTK-Legacy 下载站</title>
+
+    <title>加载中...</title>
+    <script>
+        (function () {
+            const CHARS =
+                "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ~!@#$%^&*()-_=+[{]}\\|;:'\",<.>/?";
+
+            function getRandomTitle() {
+                const minLen = 8;
+                const maxLen = 64;
+                const len = Math.floor(Math.random() * (maxLen - minLen + 1)) + minLen;
+                let result = '';
+                for (let i = 0; i < len; i++) {
+                    const idx = Math.floor(Math.random() * CHARS.length);
+                    result += CHARS[idx];
+                }
+                return result;
+            }
+
+            document.title = getRandomTitle();
+        })();
+    </script>
+
     <style>
         :root {
             --bg-body: #f6f8fc;
