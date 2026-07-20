@@ -4,29 +4,29 @@
     "SCLTK": {
         "stable": {
             "version": "v7.2.0",
-            "program": "assets/stable-build/SCLTK.exe",
-            "sig": "assets/stable-build/SCLTK.exe.sig",
-            "enhanced_config": "assets/stable-build/SCLTK.conf"
+            "program": "assets/stable-builds/SCLTK.exe",
+            "sig": "assets/stable-builds/SCLTK.exe.sig",
+            "enhanced_config": "assets/stable-builds/SCLTK.conf"
         },
         "preview": {
             "version": "v7.2.0",
-            "program": "assets/preview-build/SCLTK.exe",
-            "sig": "assets/preview-build/SCLTK.exe.sig",
-            "enhanced_config": "assets/preview-build/SCLTK.conf"
+            "program": "assets/preview-builds/SCLTK.exe",
+            "sig": "assets/preview-builds/SCLTK.exe.sig",
+            "enhanced_config": "assets/preview-builds/SCLTK.conf"
         }
     },
     "SCLTK-Legacy": {
         "stable": {
             "version": "v7.2.0",
-            "program": "assets/stable-build/SCLTK-Legacy.exe",
-            "sig": "assets/stable-build/SCLTK-Legacy.exe.sig",
-            "enhanced_config": "assets/stable-build/SCLTK-Legacy.conf"
+            "program": "assets/stable-builds/SCLTK-Legacy.exe",
+            "sig": "assets/stable-builds/SCLTK-Legacy.exe.sig",
+            "enhanced_config": "assets/stable-builds/SCLTK-Legacy.conf"
         },
         "preview": {
             "version": "v7.2.0",
-            "program": "assets/preview-build/SCLTK-Legacy.exe",
-            "sig": "assets/preview-build/SCLTK-Legacy.exe.sig",
-            "enhanced_config": "assets/preview-build/SCLTK-Legacy.conf"
+            "program": "assets/preview-builds/SCLTK-Legacy.exe",
+            "sig": "assets/preview-builds/SCLTK-Legacy.exe.sig",
+            "enhanced_config": "assets/preview-builds/SCLTK-Legacy.conf"
         }
     }
 }
