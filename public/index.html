@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="light dark" />
-    <meta name="description" content="SCLTK & SCLTK-Legacy 官方下载站" />
+    <meta name="description" content="SCLTK 下载站" />
 
     <title>加载中...</title>
     <script>
@@ -1160,7 +1160,7 @@
         <div class="main-card">
 
             <header class="banner">
-                <h1 class="banner__title">SCLTK &amp; SCLTK-Legacy 下载站</h1>
+                <h1 class="banner__title">SCLTK 下载站</h1>
                 <p class="banner__copyright" id="copyrightText">加载版权信息…</p>
             </header>
 
@@ -1170,9 +1170,9 @@
                     <div class="selector__item">
                         <div class="capsule" id="projectGroup" role="radiogroup" aria-label="选择项目">
                             <div class="capsule__slider" id="projectSlider"></div>
-                            <button class="capsule__option capsule__option--active" data-value="SCLTK" role="radio"
-                                aria-checked="true" tabindex="0">SCLTK</button>
-                            <button class="capsule__option" data-value="SCLTK-Legacy" role="radio" aria-checked="false"
+                            <button class="capsule__option capsule__option--active" data-value="mainline" role="radio"
+                                aria-checked="true" tabindex="0">SCLTK-Mainline</button>
+                            <button class="capsule__option" data-value="legacy" role="radio" aria-checked="false"
                                 tabindex="-1">SCLTK-Legacy</button>
                         </div>
                     </div>
@@ -1515,7 +1515,7 @@
                     this.state = {
                         data: null,
                         loaded: false,
-                        project: 'SCLTK',
+                        project: 'mainline',
                         version: 'stable',
                         cardProject: '',
                         cardVersion: '',
@@ -1528,6 +1528,22 @@
                     this.dom = this._cacheDom();
                     this.modal = new ModalManager(this.dom.modalContainer);
                     this._init();
+                }
+
+                _getDisplayName(projectKey) {
+                    const map = {
+                        'mainline': 'SCLTK-Mainline',
+                        'legacy': 'SCLTK-Legacy'
+                    };
+                    return map[projectKey] || projectKey;
+                }
+
+                _getVersionLabel(versionKey) {
+                    const map = {
+                        'stable': '稳定版',
+                        'preview': '预览版'
+                    };
+                    return map[versionKey] || versionKey;
                 }
 
                 _cacheDom() {
@@ -1565,7 +1581,7 @@
 
                     if (this.state.loaded) {
                         this._hideStatus();
-                        this._setCapsuleValues('SCLTK', 'stable');
+                        this._setCapsuleValues('mainline', 'stable');
                         this._loadGpg().catch(() => { });
                         this._loadLicense().catch(() => { });
                     } else {
@@ -1802,11 +1818,11 @@
                         return;
                     }
                     if (!data[project]) {
-                        this._showStatus('error', `项目 "${project}" 不存在`);
+                        this._showStatus('error', `项目 "${this._getDisplayName(project)}" 不存在`);
                         return;
                     }
                     if (!data[project][version]) {
-                        this._showStatus('error', `版本 "${version}" 不存在于 "${project}" 中`);
+                        this._showStatus('error', `版本 "${this._getVersionLabel(version)}" 不存在于 "${this._getDisplayName(project)}" 中`);
                         return;
                     }
                     this._renderCard(project, version);
@@ -1827,8 +1843,8 @@
                     this.state.cardProject = projectKey;
                     this.state.cardVersion = versionKey;
 
-                    const displayName = projectKey === 'SCLTK' ? 'SCLTK' : 'SCLTK-Legacy';
-                    const versionLabel = versionKey === 'stable' ? '稳定版' : '预览版';
+                    const displayName = this._getDisplayName(projectKey);
+                    const versionLabel = this._getVersionLabel(versionKey);
                     const versionDisplay = `${versionLabel} ${ver.version}`;
                     const hasSig = !!ver.sig;
                     const hasEnhanced = !!ver.enhanced_config;
