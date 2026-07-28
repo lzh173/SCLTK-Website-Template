@@ -1145,10 +1145,6 @@
                     <span class="icon" aria-hidden="true">🔑</span>
                     <span class="btn-label">GPG 公钥</span>
                 </button>
-                <button class="toolbar__btn" id="btnLicense" aria-label="显示许可证">
-                    <span class="icon" aria-hidden="true">📄</span>
-                    <span class="btn-label">许可证</span>
-                </button>
             </div>
             <div class="toolbar__group">
                 <button class="toolbar__btn toolbar__btn--theme" id="btnTheme" aria-label="切换主题" title="切换主题">
@@ -1520,9 +1516,8 @@
                         cardProject: '',
                         cardVersion: '',
                         theme: 'light',
-                        cache: { gpg: null, licenses: [], announcement: null },
-                        flags: { gpg: false, licenses: false, announcement: false },
-                        licenseFiles: [],
+                        cache: { gpg: null, announcement: null },
+                        flags: { gpg: false, announcement: false },
                         writing: false
                     };
 
@@ -1563,7 +1558,6 @@
                         cardArea: $('#cardArea'),
                         emptyState: $('#emptyState'),
                         btnGpg: $('#btnGpg'),
-                        btnLicense: $('#btnLicense'),
                         btnTheme: $('#btnTheme'),
                         themeIcon: $('#themeIcon'),
                         btnAnnouncement: $('#btnAnnouncement'),
@@ -1584,7 +1578,6 @@
                         this._hideStatus();
                         this._setCapsuleValues('mainline', 'stable');
                         this._loadGpg().catch(() => { });
-                        this._loadLicenses().catch(() => { });
                     } else {
                         this._showStatus('error', '❌ 无法加载版本数据文件，请检查控制台错误信息');
                     }
@@ -1642,11 +1635,6 @@
                         bodyId: 'gpgBody',
                         initialContent: '<span class="loading-text">⏳ 加载中…</span>'
                     });
-                    this.modal.register('License', {
-                        title: '📄 许可证',
-                        bodyId: 'licenseBody',
-                        initialContent: '<span class="loading-text">⏳ 加载中…</span>'
-                    });
                     this.modal.register('Alt', {
                         title: '✨ 备用获取方案',
                         bodyId: 'altBody'
@@ -1673,39 +1661,6 @@
                             }
                             body.innerHTML =
                                 `<pre class="raw-content">${Utils.escapeHtml(this.state.cache.gpg || '加载失败')}</pre>`;
-                        });
-                    });
-
-                    this.dom.btnLicense.addEventListener('click', () => {
-                        this.modal.open('License', async (body) => {
-                            if (!this.state.flags.licenses) {
-                                body.innerHTML = '<span class="loading-text">⏳ 加载中…</span>';
-                                await this._loadLicenses();
-                            }
-                            const licenses = this.state.cache.licenses || [];
-                            if (licenses.length === 0) {
-                                body.innerHTML =
-                                    '<p style="color:var(--text-muted);">暂无许可证信息</p>';
-                                return;
-                            }
-                            let html = '';
-                            for (const lic of licenses) {
-                                const safeId = 'license-' + lic.item.replace(/[^a-zA-Z0-9]/g, '-');
-                                html += `
-                                    <div style="margin-bottom:20px;">
-                                        <h3 style="font-size:1rem;font-weight:600;margin-bottom:6px;color:var(--text-primary);">${Utils.escapeHtml(lic.item)}</h3>
-                                        <div class="code-block">
-                                            <button class="code-block__copy" data-target="${safeId}">复制</button>
-                                            <pre id="${safeId}"><code>${Utils.escapeHtml(lic.content)}</code></pre>
-                                        </div>
-                                    </div>
-                                `;
-                            }
-                            body.innerHTML = html;
-                            body.querySelectorAll('.code-block__copy').forEach(btn => {
-                                btn.addEventListener('click', () =>
-                                    Clipboard.copyFromElement(btn, btn.dataset.target));
-                            });
                         });
                     });
 
@@ -1747,14 +1702,8 @@
                         this.state.data = Utils.parseJsonc(text);
                         this.state.loaded = true;
 
-                        const { copyright, announcement_file, license_files } = this.state.data;
+                        const { copyright, announcement_file } = this.state.data;
                         this.dom.copyright.textContent = copyright || '© SCLTK Project';
-
-                        if (license_files && Array.isArray(license_files)) {
-                            this.state.licenseFiles = license_files;
-                        } else {
-                            this.state.licenseFiles = [];
-                        }
 
                         if (announcement_file && typeof announcement_file === 'string') {
                             const file = announcement_file.trim();
@@ -1780,53 +1729,6 @@
                         this.state.cache.gpg = '❌ 加载失败: ' + err.message;
                     }
                     this.state.flags.gpg = true;
-                }
-
-                async _loadLicenses() {
-                    const licenseFiles = this.state.licenseFiles || [];
-
-                    if (licenseFiles.length === 0) {
-                        try {
-                            const resp = await Utils.fetchWithTimeout('assets/SCLTK-License.txt');
-                            if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-                            const text = await resp.text();
-                            this.state.cache.licenses = [{
-                                item: 'SCLTK',
-                                content: text.trim() || '(空)'
-                            }];
-                        } catch (err) {
-                            console.error('加载 License 失败:', err);
-                            this.state.cache.licenses = [{
-                                item: 'SCLTK',
-                                content: '❌ 加载失败: ' + err.message
-                            }];
-                        }
-                        this.state.flags.licenses = true;
-                        return;
-                    }
-
-                    const results = [];
-                    for (const lic of licenseFiles) {
-                        const item = lic.item || '未知许可证';
-                        const fileUrl = lic.file_url;
-                        if (!fileUrl) {
-                            results.push({ item, content: '⚠️ 未配置 file_url' });
-                            continue;
-                        }
-                        try {
-                            const url = fileUrl.startsWith('http') ? fileUrl :
-                                new URL(fileUrl, window.location.href).href;
-                            const resp = await Utils.fetchWithTimeout(url);
-                            if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-                            const text = await resp.text();
-                            results.push({ item, content: text.trim() || '(空)' });
-                        } catch (err) {
-                            console.error(`加载许可证 "${item}" 失败:`, err);
-                            results.push({ item, content: '❌ 加载失败: ' + err.message });
-                        }
-                    }
-                    this.state.cache.licenses = results;
-                    this.state.flags.licenses = true;
                 }
 
                 async _loadAnnouncement(filePath) {

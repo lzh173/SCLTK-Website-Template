@@ -1,16 +1,6 @@
 {
     "copyright": "Copyright (C) 2026 MaxLHy0424.",
     "announcement_file": "assets/announcement.txt",
-    "license_files": [
-        {
-            "item": "SCLTK",
-            "file_url": "assets/license_files/SCLTK.txt"
-        },
-        {
-            "item": "libtre",
-            "file_url": "assets/license_files/libtre.txt"
-        }
-    ],
     "mainline": {
         "stable": {
             "version": "v7.2.0",
